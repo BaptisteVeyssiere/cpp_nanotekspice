@@ -1,23 +1,23 @@
 //
-// component_4081.cpp for nanotekspice in /home/scutar_n/rendu/CPP/cpp_nanotekspice
+// component_4008.cpp for nanotekspice in /home/scutar_n/rendu/CPP/cpp_nanotekspice
 //
 // Made by Nathan Scutari
 // Login   <scutar_n@epitech.net>
 //
 // Started on  Thu Feb  9 11:25:28 2017 Nathan Scutari
-// Last update Wed Feb 15 16:45:47 2017 Nathan Scutari
+// Last update Wed Feb 15 16:45:46 2017 Nathan Scutari
 //
 
 #include <iostream>
-#include "component_4081.hpp"
+#include "component_4008.hpp"
 
-c_4081::c_4081(UNUSED const std::string &value)
+c_4008::c_4008(UNUSED const std::string &value)
 {
   t_link	link;
 
   link.pin_target = 0;
   link.link = NULL;
-  for (int i = 0 ; i < 14 ; ++i)
+  for (int i = 0 ; i < 16 ; ++i)
     {
       computed.push_back(false);
       pin_state.push_back(nts::UNDEFINED);
@@ -25,26 +25,18 @@ c_4081::c_4081(UNUSED const std::string &value)
     }
 }
 
-c_4081::~c_4081()
+c_4008::~c_4008()
 {}
 
-nts::Tristate	c_4081::And_gate(nts::Tristate pin_input1, nts::Tristate pin_input2)
+nts::Tristate	c_4008::Compute_si(size_t si)
 {
-  if (pin_input1 == nts::FALSE || pin_input2 == nts::FALSE)
-    return (nts::FALSE);
-  if (pin_input1 == nts::TRUE && pin_input2 == nts::TRUE)
-    return (nts::TRUE);
-  return (nts::UNDEFINED);
+
 }
 
-nts::Tristate	c_4081::Compute(size_t pin_num_this)
+nts::Tristate	c_4008::Compute(size_t pin_num_this)
 {
-  if (pin_num_this == 3 || pin_num_this == 10)
-    return (And_gate(this->Compute(pin_num_this - 1),
-		     this->Compute(pin_num_this - 2)));
-  else if (pin_num_this == 4 || pin_num_this == 11)
-    return (And_gate(this->Compute(pin_num_this + 1),
-		     this->Compute(pin_num_this + 2)));
+  if (pin_num_this >= 10 && pin_num_this <= 13)
+    return (this->Compute_si(pin_num_this - 10));
   if (computed[pin_num_this] == false)
     {
       computed[pin_num_this] = true;
@@ -56,9 +48,9 @@ nts::Tristate	c_4081::Compute(size_t pin_num_this)
   return (this->pin_state[pin_num_this]);
 }
 
-void		c_4081::Dump(void) const
+void		c_4008::Dump(void) const
 {
-  std::cout << "Component : 4081" << std::endl;
+  std::cout << "Component : 4008" << std::endl;
   for (int i = 0 ; i < 14 ; ++i)
     {
       std::cout << "Pin " << i + 1 << ": ";
@@ -69,7 +61,7 @@ void		c_4081::Dump(void) const
     }
 }
 
-void		c_4081::SetLink(size_t pin_num_this,
+void		c_4008::SetLink(size_t pin_num_this,
 				nts::IComponent &component,
 				size_t pin_num_target)
 

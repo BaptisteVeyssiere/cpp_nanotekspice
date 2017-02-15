@@ -5,13 +5,15 @@
 // Login   <scutar_n@epitech.net>
 //
 // Started on  Thu Feb  9 10:44:03 2017 Nathan Scutari
-// Last update Thu Feb  9 14:47:57 2017 Nathan Scutari
+// Last update Mon Feb 13 15:03:47 2017 Nathan Scutari
 //
 
 #ifndef ICOMPONENT_HPP_
 # define ICOMPONENT_HPP_
 
-#include "cstddef"
+# include "cstddef"
+
+# define UNUSED __attribute__((unused))
 
 namespace nts
 {
