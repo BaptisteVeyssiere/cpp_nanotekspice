@@ -5,7 +5,7 @@
 // Login   <veyssi_b@epitech.net>
 //
 // Started on  Mon Feb  6 15:43:02 2017 Baptiste Veyssiere
-// Last update Mon Feb  6 17:07:20 2017 Baptiste Veyssiere
+// Last update Tue Feb 14 22:01:04 2017 Baptiste Veyssiere
 //
 
 #include "Parser.hpp"
@@ -42,8 +42,19 @@ int	parse_config_file(int ac, char**av, Parser *parser)
 int	main(int ac, char **av)
 {
   Parser	parser;
+  std::string	input;
 
   if (parse_config_file(ac, av, &parser))
     return (1);
+  for (int i = 2; i < ac; i++)
+    parser.add_value(av[i]);
+  input = "";
+  while (input != "exit" && !(std::cin.eof()))
+    {
+      std::cout << "> ";
+      std::cin >> input;
+      if (input != "exit" && !(std::cin.eof()))
+	parser.handle_input(input);
+    }
   return (0);
 }
