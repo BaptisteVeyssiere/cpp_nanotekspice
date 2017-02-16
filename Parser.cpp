@@ -5,7 +5,7 @@
 // Login   <veyssi_b@epitech.net>
 //
 // Started on  Mon Feb  6 15:37:22 2017 Baptiste Veyssiere
-// Last update Thu Feb 16 16:30:40 2017 Baptiste Veyssiere
+// Last update Thu Feb 16 17:28:32 2017 Baptiste Veyssiere
 //
 
 #include "Parser.hpp"
@@ -57,93 +57,67 @@ void	Parser::feed(std::string const& input)
 
 nts::IComponent	*Parser::create4001(const std::string &value) const
 {
-  if (value != "")
-    throw std::exception();
-  return (new c_4001);
+  return (new c_4001(value));
 }
 
 nts::IComponent	*Parser::create4008(const std::string &value) const
 {
-  if (value != "")
-    throw std::exception();
-  return (new c_4008);
+  return (new c_4008(value));
 }
 
 nts::IComponent	*Parser::create4011(const std::string &value) const
 {
-  if (value != "")
-    throw std::exception();
-  return (new c_4011);
+  return (new c_4011(value));
 }
 
 nts::IComponent	*Parser::create4013(const std::string &value) const
 {
-  if (value != "")
-    throw std::exception();
-  return (new c_4013);
+  return (new c_4013(value));
 }
 
 nts::IComponent	*Parser::create4017(const std::string &value) const
 {
-  if (value != "")
-    throw std::exception();
-  return (new c_4017);
+  return (new c_4017(value));
 }
 
 nts::IComponent	*Parser::create4030(const std::string &value) const
 {
-  if (value != "")
-    throw std::exception();
-  return (new c_4030);
+  return (new c_4030(value));
 }
 
 nts::IComponent	*Parser::create4040(const std::string &value) const
 {
-  if (value != "")
-    throw std::exception();
-  return (new c_4040);
+  return (new c_4040(value));
 }
 
 nts::IComponent	*Parser::create4069(const std::string &value) const
 {
-  if (value != "")
-    throw std::exception();
-  return (new c_4069);
+  return (new c_4069(value));
 }
 
 nts::IComponent	*Parser::create4071(const std::string &value) const
 {
-  if (value != "")
-    throw std::exception();
-  return (new c_4071);
+  return (new c_4071(value));
 }
 
 nts::IComponent	*Parser::create4081(const std::string &value) const
 {
-  if (value != "")
-    throw std::exception();
-  return (new c_4081);
+  return (new c_4081(value));
 }
 
 nts::IComponent	*Parser::create4094(const std::string &value) const
 {
-  if (value != "")
-    throw std::exception();
-  return (new c_4094);
+  return (new c_4094(value));
 }
 
 nts::IComponent	*Parser::create4514(const std::string &value) const
 {
-  if (value != "")
-    throw std::exception();
-  return (new c_4514);
+  return (new c_4514(value));
 }
 
 nts::IComponent	*Parser::create4801(const std::string &value) const
 {
-  if (value != "")
-    throw std::exception();
-  return (new c_4081);
+  return (new c_4081(value));
 }
 
 nts::IComponent	*Parser::create2716(const std::string &value) const
@@ -153,37 +127,27 @@ nts::IComponent	*Parser::create2716(const std::string &value) const
 
 nts::IComponent	*Parser::createinput(const std::string &value) const
 {
-  if (value != "")
-    throw std::exception();
-  return (new c_input);
+  return (new c_input(value));
 }
 
 nts::IComponent	*Parser::createtrue(const std::string &value) const
 {
-  if (value != "")
-    throw std::exception();
-  return (new c_true);
+  return (new c_true(value));
 }
 
 nts::IComponent	*Parser::createfalse(const std::string &value) const
 {
-  if (value != "")
-    throw std::exception();
-  return (new c_false);
+  return (new c_false(value));
 }
 
 nts::IComponent	*Parser::createclock(const std::string &value) const
 {
-  if (value != "")
-    throw std::exception();
-  return (new c_clock);
+  return (new c_clock(value));
 }
 
 nts::IComponent	*Parser::createoutput(const std::string &value) const
 {
-  if (value != "")
-    throw std::exception();
-  return (new c_output);
+  return (new c_output(value));
 }
 
 nts::IComponent	*Parser::createComponent(const std::string &type, const std::string &value)
@@ -268,7 +232,7 @@ void	Parser::add_value(char const *str)
   if (name == "" || (value != "0" && value != "1"))
     throw std::exception();
   component = this->foundObject(name);
-  component->component->changeValue(std::stoi(value));
+  component->component->setValue(std::stoi(value));
 }
 
 void	Parser::display()
@@ -289,7 +253,20 @@ void	Parser::simulate()
   for (size_t i = 0; i < size; i++)
     if ((*this->component)[i]->type == "output")
       (*this->component)[i]->component->Compute();
-  // Rajouter les clocks
+  for (size_t i = 0; i < size; i++)
+    if ((*this->component)[i]->type == "clock")
+      {
+	if ((*this->component)[i]->value == 0)
+	  {
+	    (*this->component)[i]->component->setValue(1);
+	    (*this->component)[i]->value = 1;
+	  }
+	else if ((*this->component)[i]->value == 1)
+	  {
+	    (*this->component)[i]->component->setValue(0);
+	    (*this->component)[i]->value = 0;
+	  }
+      }
 }
 
 void	Parser::loop()
@@ -580,6 +557,18 @@ void	aff_tree(nts::t_ast_node *node)
     aff_tree((*node->children)[j]);
 }
 
+static bool	compareByAscii(const t_component *a, const t_component *b)
+{
+  return (a->name < b->name);
+}
+
+void	Parser::sortComponents()
+{
+  if (!(this->component))
+    return ;
+  std::sort(this->component->begin(), this->component->end(), compareByAscii);
+}
+
 nts::t_ast_node	*Parser::createTree()
 {
   nts::t_ast_node	*root = new nts::t_ast_node(new std::vector<nts::t_ast_node*>);
@@ -601,5 +590,6 @@ nts::t_ast_node	*Parser::createTree()
     throw std::exception();
   aff_tree(root);
   this->parseTree(*root);
+  this->sortComponents();
   return (root);
 }

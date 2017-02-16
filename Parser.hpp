@@ -5,7 +5,7 @@
 // Login   <veyssi_b@epitech.net>
 //
 // Started on  Mon Feb  6 15:30:49 2017 Baptiste Veyssiere
-// Last update Thu Feb 16 16:29:06 2017 Baptiste Veyssiere
+// Last update Thu Feb 16 17:06:10 2017 Baptiste Veyssiere
 //
 
 #ifndef PARSER_HPP
@@ -13,10 +13,16 @@
 
 #include <fstream>
 #include <iostream>
+#include <algorithm>
 #include <string>
 #include <csignal>
 #include "IParser.hpp"
-#include "IComponent.hpp"
+#include "component_4001.hpp"
+#include "component_4008.hpp"
+#include "component_4011.hpp"
+#include "component_4030.hpp"
+#include "component_4071.hpp"
+#include "component_4081.hpp"
 
 typedef struct		s_component
 {
@@ -57,6 +63,7 @@ private:
   nts::t_ast_node		*createComp(int*) const;
   nts::t_ast_node	        *createSection(int*, std::string const&) const;
   nts::t_ast_node		*createChipset(int*) const;
+  void				sortComponents();
   void				createComponents(nts::t_ast_node& root);
   t_component			*foundObject(std::string const &name);
   void				makeLinks(nts::t_ast_node& root);
