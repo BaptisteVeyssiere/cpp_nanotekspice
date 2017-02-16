@@ -5,7 +5,7 @@
 // Login   <veyssi_b@epitech.net>
 //
 // Started on  Mon Feb  6 15:30:49 2017 Baptiste Veyssiere
-// Last update Tue Feb 14 22:15:32 2017 Baptiste Veyssiere
+// Last update Thu Feb 16 16:29:06 2017 Baptiste Veyssiere
 //
 
 #ifndef PARSER_HPP
@@ -27,7 +27,7 @@ typedef struct		s_component
   int			value;
 }			t_component;
 
-class	Parser
+class	Parser : public nts::IParser
 {
 private:
   std::string			buffer;
@@ -65,7 +65,29 @@ private:
   void				simulate();
   void				loop();
   void				dump();
+  nts::IComponent		*createComponent(const std::string &type, const std::string &value);
+  nts::IComponent		*create4001(const std::string &value) const;
+  nts::IComponent		*create4008(const std::string &value) const;
+  nts::IComponent		*create4011(const std::string &value) const;
+  nts::IComponent		*create4013(const std::string &value) const;
+  nts::IComponent		*create4017(const std::string &value) const;
+  nts::IComponent		*create4030(const std::string &value) const;
+  nts::IComponent		*create4040(const std::string &value) const;
+  nts::IComponent		*create4069(const std::string &value) const;
+  nts::IComponent		*create4071(const std::string &value) const;
+  nts::IComponent		*create4081(const std::string &value) const;
+  nts::IComponent		*create4094(const std::string &value) const;
+  nts::IComponent		*create4514(const std::string &value) const;
+  nts::IComponent		*create4801(const std::string &value) const;
+  nts::IComponent		*create2716(const std::string &value) const;
+  nts::IComponent		*createinput(const std::string &value) const;
+  nts::IComponent		*createoutput(const std::string &value) const;
+  nts::IComponent		*createtrue(const std::string &value) const;
+  nts::IComponent		*createfalse(const std::string &value) const;
+  nts::IComponent		*createclock(const std::string &value) const;
 };
+
+typedef nts::IComponent*	(Parser::*func_ptr)(const std::string &value) const;
 
 bool	link_isValid(t_component *obj, t_component *obj2, int pin1, int pin2);
 char	input_pin(int pin);

@@ -5,7 +5,7 @@
 // Login   <veyssi_b@epitech.net>
 //
 // Started on  Mon Feb  6 15:37:22 2017 Baptiste Veyssiere
-// Last update Wed Feb 15 10:34:52 2017 Baptiste Veyssiere
+// Last update Thu Feb 16 16:30:40 2017 Baptiste Veyssiere
 //
 
 #include "Parser.hpp"
@@ -53,6 +53,190 @@ void	Parser::feed(std::string const& input)
       if (writer)
 	this->buffer += input[i];
     }
+}
+
+nts::IComponent	*Parser::create4001(const std::string &value) const
+{
+  if (value != "")
+    throw std::exception();
+  return (new c_4001);
+}
+
+nts::IComponent	*Parser::create4008(const std::string &value) const
+{
+  if (value != "")
+    throw std::exception();
+  return (new c_4008);
+}
+
+nts::IComponent	*Parser::create4011(const std::string &value) const
+{
+  if (value != "")
+    throw std::exception();
+  return (new c_4011);
+}
+
+nts::IComponent	*Parser::create4013(const std::string &value) const
+{
+  if (value != "")
+    throw std::exception();
+  return (new c_4013);
+}
+
+nts::IComponent	*Parser::create4017(const std::string &value) const
+{
+  if (value != "")
+    throw std::exception();
+  return (new c_4017);
+}
+
+nts::IComponent	*Parser::create4030(const std::string &value) const
+{
+  if (value != "")
+    throw std::exception();
+  return (new c_4030);
+}
+
+nts::IComponent	*Parser::create4040(const std::string &value) const
+{
+  if (value != "")
+    throw std::exception();
+  return (new c_4040);
+}
+
+nts::IComponent	*Parser::create4069(const std::string &value) const
+{
+  if (value != "")
+    throw std::exception();
+  return (new c_4069);
+}
+
+nts::IComponent	*Parser::create4071(const std::string &value) const
+{
+  if (value != "")
+    throw std::exception();
+  return (new c_4071);
+}
+
+nts::IComponent	*Parser::create4081(const std::string &value) const
+{
+  if (value != "")
+    throw std::exception();
+  return (new c_4081);
+}
+
+nts::IComponent	*Parser::create4094(const std::string &value) const
+{
+  if (value != "")
+    throw std::exception();
+  return (new c_4094);
+}
+
+nts::IComponent	*Parser::create4514(const std::string &value) const
+{
+  if (value != "")
+    throw std::exception();
+  return (new c_4514);
+}
+
+nts::IComponent	*Parser::create4801(const std::string &value) const
+{
+  if (value != "")
+    throw std::exception();
+  return (new c_4081);
+}
+
+nts::IComponent	*Parser::create2716(const std::string &value) const
+{
+  return (new c_2716(value));
+}
+
+nts::IComponent	*Parser::createinput(const std::string &value) const
+{
+  if (value != "")
+    throw std::exception();
+  return (new c_input);
+}
+
+nts::IComponent	*Parser::createtrue(const std::string &value) const
+{
+  if (value != "")
+    throw std::exception();
+  return (new c_true);
+}
+
+nts::IComponent	*Parser::createfalse(const std::string &value) const
+{
+  if (value != "")
+    throw std::exception();
+  return (new c_false);
+}
+
+nts::IComponent	*Parser::createclock(const std::string &value) const
+{
+  if (value != "")
+    throw std::exception();
+  return (new c_clock);
+}
+
+nts::IComponent	*Parser::createoutput(const std::string &value) const
+{
+  if (value != "")
+    throw std::exception();
+  return (new c_output);
+}
+
+nts::IComponent	*Parser::createComponent(const std::string &type, const std::string &value)
+{
+  func_ptr	fptr[] =
+    {
+      &Parser::create4001,
+      &Parser::create4008,
+      &Parser::create4011,
+      &Parser::create4013,
+      &Parser::create4017,
+      &Parser::create4030,
+      &Parser::create4040,
+      &Parser::create4069,
+      &Parser::create4071,
+      &Parser::create4081,
+      &Parser::create4094,
+      &Parser::create4514,
+      &Parser::create4801,
+      &Parser::create2716,
+      &Parser::createinput,
+      &Parser::createtrue,
+      &Parser::createfalse,
+      &Parser::createclock,
+      &Parser::createoutput
+    };
+    std::string	str_list[] =
+    {
+      "4001",
+      "4008",
+      "4011",
+      "4013",
+      "4017",
+      "4030",
+      "4040",
+      "4069",
+      "4071",
+      "4081",
+      "4094",
+      "4514",
+      "4801",
+      "2716",
+      "input",
+      "true",
+      "false",
+      "clock",
+      "output"
+    };
+
+    for (int i = 0; i < 19; i++)
+      if (type == str_list[i])
+	return ((this->*fptr[i])(value));
+    return (NULL);
 }
 
 void	Parser::add_value(char const *str)
@@ -210,16 +394,16 @@ void	Parser::makeLinks(nts::t_ast_node& root)
       pin2 = std::stoi((*component->children)[1]->value);
       if (link_isValid(obj, obj2, pin1, pin2))
 	{
-	  obj->component->SetLink((*(*component->children)[i]->children)[0]->value,
-				  obj2->component,
-				  (*(*component->children)[i]->children)[1]->value);
+	  obj->component->SetLink(std::stoi((*(*component->children)[i]->children)[0]->value),
+				  *(obj2->component),
+				  std::stoi((*(*component->children)[i]->children)[1]->value));
 	  obj->isLinked = true;
 	}
       else
 	{
-	  obj2->component->SetLink((*(*component->children)[i]->children)[1]->value,
-				   obj->component,
-				   (*(*component->children)[i]->children)[0]->value);
+	  obj2->component->SetLink(std::stoi((*(*component->children)[i]->children)[1]->value),
+				   *(obj->component),
+				   std::stoi((*(*component->children)[i]->children)[0]->value));
 	  obj2->isLinked = true;
 	}
     }
