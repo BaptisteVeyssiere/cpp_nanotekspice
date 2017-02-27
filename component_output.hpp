@@ -5,7 +5,7 @@
 // Login   <scutar_n@epitech.net>
 //
 // Started on  Thu Feb  9 11:01:40 2017 Nathan Scutari
-// Last update Mon Feb 27 11:20:07 2017 Nathan Scutari
+// Last update Mon Feb 27 11:25:05 2017 Nathan Scutari
 //
 
 #ifndef COMPONENT_OUTPUT_HPP_

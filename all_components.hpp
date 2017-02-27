@@ -5,7 +5,7 @@
 // Login   <scutar_n@epitech.net>
 //
 // Started on  Mon Feb 13 12:19:57 2017 Nathan Scutari
-// Last update Thu Feb 16 20:39:45 2017 Nathan Scutari
+// Last update Mon Feb 27 11:22:27 2017 Nathan Scutari
 //
 
 #ifndef ALL_COMPONENTS
@@ -17,5 +17,10 @@
 # include "component_4030.hpp"
 # include "component_4071.hpp"
 # include "component_4008.hpp"
+# include "component_input.hpp"
+# include "component_clock.hpp"
+# include "component_true.hpp"
+# include "component_false.hpp"
+# include "component_output.hpp"
 
 #endif /* !ALL_COMPONENTS */

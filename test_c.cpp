@@ -5,7 +5,7 @@
 // Login   <scutar_n@epitech.net>
 //
 // Started on  Thu Feb 16 20:40:28 2017 Nathan Scutari
-// Last update Thu Feb 16 20:53:53 2017 Nathan Scutari
+// Last update Mon Feb 27 11:53:24 2017 Nathan Scutari
 //
 
 #include <iostream>
@@ -13,8 +13,19 @@
 
 int	main()
 {
-  nts::IComponent	*comp = new c_4008("");
+  nts::IComponent	*outp = new c_output("");
+  nts::IComponent	*inp = new c_input("0");
+  nts::IComponent	*comp = new c_4071("");
 
-  std::cout << comp->Compute(10) << std::endl;
+  comp->SetLink(1, *inp, 1);
+  comp->SetLink(2, *comp, 3);
+  outp->SetLink(1, *comp, 3);
+  outp->Compute();
+  comp->Dump();
+  ((c_input*)inp)->SetPin(nts::TRUE);
+  outp->Compute();
+  comp->Dump();
+  ((c_input*)inp)->SetPin(nts::FALSE);
+  outp->Compute();
   comp->Dump();
 }
