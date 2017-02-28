@@ -5,7 +5,7 @@
 // Login   <veyssi_b@epitech.net>
 //
 // Started on  Mon Feb  6 15:43:02 2017 Baptiste Veyssiere
-// Last update Tue Feb 14 22:01:04 2017 Baptiste Veyssiere
+// Last update Mon Feb 27 23:11:30 2017 Baptiste Veyssiere
 //
 
 #include "Parser.hpp"
@@ -49,6 +49,8 @@ int	main(int ac, char **av)
   for (int i = 2; i < ac; i++)
     parser.add_value(av[i]);
   input = "";
+  parser.simulate();
+  parser.display();
   while (input != "exit" && !(std::cin.eof()))
     {
       std::cout << "> ";
