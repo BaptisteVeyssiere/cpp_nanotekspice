@@ -5,7 +5,7 @@
 // Login   <veyssi_b@epitech.net>
 //
 // Started on  Mon Feb  6 15:30:49 2017 Baptiste Veyssiere
-// Last update Thu Feb 16 17:06:10 2017 Baptiste Veyssiere
+// Last update Mon Feb 27 23:11:15 2017 Baptiste Veyssiere
 //
 
 #ifndef PARSER_HPP
@@ -28,7 +28,7 @@ typedef struct		s_component
 {
   std::string		name;
   std::string		type;
-  bool			isLinked;
+  bool			isLinked[22];
   nts::IComponent	*component;
   int			value;
 }			t_component;
@@ -51,6 +51,8 @@ public:
   virtual nts::t_ast_node	*createTree();
   void				add_value(char const *str);
   void				handle_input(std::string const &input);
+  void				simulate();
+  void				display();
 
 private:
   void				goToNextLine(int*) const;
@@ -68,8 +70,6 @@ private:
   t_component			*foundObject(std::string const &name);
   void				makeLinks(nts::t_ast_node& root);
   void				checkOutputs() const;
-  void				display();
-  void				simulate();
   void				loop();
   void				dump();
   nts::IComponent		*createComponent(const std::string &type, const std::string &value);

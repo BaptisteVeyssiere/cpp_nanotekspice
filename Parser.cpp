@@ -5,7 +5,7 @@
 // Login   <veyssi_b@epitech.net>
 //
 // Started on  Mon Feb  6 15:37:22 2017 Baptiste Veyssiere
-// Last update Thu Feb 16 17:28:32 2017 Baptiste Veyssiere
+// Last update Mon Feb 27 23:17:07 2017 Baptiste Veyssiere
 //
 
 #include "Parser.hpp"
@@ -72,12 +72,14 @@ nts::IComponent	*Parser::create4011(const std::string &value) const
 
 nts::IComponent	*Parser::create4013(const std::string &value) const
 {
-  return (new c_4013(value));
+  //return (new c_4013(value));
+  return (NULL);
 }
 
 nts::IComponent	*Parser::create4017(const std::string &value) const
 {
-  return (new c_4017(value));
+  //return (new c_4017(value));
+  return (NULL);
 }
 
 nts::IComponent	*Parser::create4030(const std::string &value) const
@@ -87,12 +89,14 @@ nts::IComponent	*Parser::create4030(const std::string &value) const
 
 nts::IComponent	*Parser::create4040(const std::string &value) const
 {
-  return (new c_4040(value));
+  //return (new c_4040(value));
+  return (NULL);
 }
 
 nts::IComponent	*Parser::create4069(const std::string &value) const
 {
-  return (new c_4069(value));
+  //return (new c_4069(value));
+  return (NULL);
 }
 
 nts::IComponent	*Parser::create4071(const std::string &value) const
@@ -107,12 +111,14 @@ nts::IComponent	*Parser::create4081(const std::string &value) const
 
 nts::IComponent	*Parser::create4094(const std::string &value) const
 {
-  return (new c_4094(value));
+  //return (new c_4094(value));
+  return (NULL);
 }
 
 nts::IComponent	*Parser::create4514(const std::string &value) const
 {
-  return (new c_4514(value));
+  //return (new c_4514(value));
+  return (NULL);
 }
 
 nts::IComponent	*Parser::create4801(const std::string &value) const
@@ -122,7 +128,8 @@ nts::IComponent	*Parser::create4801(const std::string &value) const
 
 nts::IComponent	*Parser::create2716(const std::string &value) const
 {
-  return (new c_2716(value));
+  //return (new c_2716(value));
+  return (NULL);
 }
 
 nts::IComponent	*Parser::createinput(const std::string &value) const
@@ -210,6 +217,7 @@ void	Parser::add_value(char const *str)
   bool		isName;
   int		i;
   t_component	*component;
+  nts::Tristate	state;
 
   name = "";
   value = "";
@@ -231,8 +239,15 @@ void	Parser::add_value(char const *str)
     }
   if (name == "" || (value != "0" && value != "1"))
     throw std::exception();
+  std::cout << "name: " << name << " / value: " << value << std::endl;
   component = this->foundObject(name);
-  component->component->setValue(std::stoi(value));
+  if (std::stoi(value) == -1)
+    state = nts::UNDEFINED;
+  else
+    state = std::stoi(value) < 1 ? nts::FALSE : nts::TRUE;
+  if (state == nts::FALSE)
+    std::cout << "state == nts::FALSE" << std::endl;
+  ((c_input*)(component->component))->SetPin(state);
 }
 
 void	Parser::display()
@@ -258,12 +273,12 @@ void	Parser::simulate()
       {
 	if ((*this->component)[i]->value == 0)
 	  {
-	    (*this->component)[i]->component->setValue(1);
+	    ((c_input*)(*this->component)[i]->component)->SetPin(nts::TRUE);
 	    (*this->component)[i]->value = 1;
 	  }
 	else if ((*this->component)[i]->value == 1)
 	  {
-	    (*this->component)[i]->component->setValue(0);
+	    ((c_input*)(*this->component)[i]->component)->SetPin(nts::FALSE);
 	    (*this->component)[i]->value = 0;
 	  }
       }
@@ -333,7 +348,8 @@ void	Parser::createComponents(nts::t_ast_node& root)
       (*this->component)[i]->component = this->createComponent((*component->children)[i]->lexeme, "");
       (*this->component)[i]->name = (*component->children)[i]->value;
       (*this->component)[i]->type = (*component->children)[i]->lexeme;
-      (*this->component)[i]->isLinked = false;
+      for (int j = 0; j < 22; j++)
+	(*this->component)[i]->isLinked[j] = false;
       (*this->component)[i]->value = -1;
       for (int j = i - 1; j >= 0; j--)
 	if ((*this->component)[i]->name == (*this->component)[j]->name)
@@ -347,8 +363,15 @@ t_component	*Parser::foundObject(std::string const &name)
 
   size = this->component->size();
   for (size_t i = 0; i < size; i++)
-    if ((*this->component)[i]->name == name)
-      return ((*this->component)[i]);
+    {
+      if ((*this->component)[i]->name == name)
+	{
+	  std::cout << "Object found! => " << (*this->component)[i]->name << " compared to " << name << std::endl;
+	  return ((*this->component)[i]);
+	}
+      else
+	std::cout << "Wrong object :( => " << (*this->component)[i]->name << " compared to " << name << std::endl;
+    }
   throw std::exception();
 }
 
@@ -365,23 +388,26 @@ void	Parser::makeLinks(nts::t_ast_node& root)
   size = component->children->size();
   for (size_t i = 0; i < size; i++)
     {
+      std::cout << "object searched: " << (*(*component->children)[i]->children)[0]->lexeme << std::endl;
       obj = this->foundObject((*(*component->children)[i]->children)[0]->lexeme);
       obj2 = this->foundObject((*(*component->children)[i]->children)[1]->lexeme);
-      pin1 = std::stoi((*component->children)[0]->value);
-      pin2 = std::stoi((*component->children)[1]->value);
+      pin1 = std::stoi((*(*component->children)[i]->children)[0]->value);
+      pin2 = std::stoi((*(*component->children)[i]->children)[1]->value);
       if (link_isValid(obj, obj2, pin1, pin2))
 	{
 	  obj->component->SetLink(std::stoi((*(*component->children)[i]->children)[0]->value),
 				  *(obj2->component),
 				  std::stoi((*(*component->children)[i]->children)[1]->value));
-	  obj->isLinked = true;
+	  std::cout << obj->name << ":" << (*(*component->children)[i]->children)[0]->value << " was linked to " << obj2->name << ":" << (*(*component->children)[i]->children)[1]->value << std::endl;
+	  obj->isLinked[pin1] = true;
 	}
       else
 	{
 	  obj2->component->SetLink(std::stoi((*(*component->children)[i]->children)[1]->value),
 				   *(obj->component),
 				   std::stoi((*(*component->children)[i]->children)[0]->value));
-	  obj2->isLinked = true;
+	  	  std::cout << obj2->name << ":" << (*(*component->children)[i]->children)[1]->value << " was linked to " << obj->name << ":" << (*(*component->children)[i]->children)[0]->value << std::endl;
+	  obj2->isLinked[pin2] = true;
 	}
     }
 }
@@ -400,6 +426,13 @@ void	Parser::checkOutputs() const
 void	Parser::parseTree(nts::t_ast_node& root)
 {
   this->createComponents(root);
+  for (int i = 0; i < 4; i++)
+    {
+      std::cout << "New component created: " << std::endl;
+      std::cout << "Type: " << (*this->component)[i]->type << std::endl;
+      std::cout << "Valeur: " << (*this->component)[i]->value << std::endl;
+      std::cout << "Name: " << (*this->component)[i]->name << std::endl;
+    }
   this->makeLinks(root);
   this->checkOutputs();
 }

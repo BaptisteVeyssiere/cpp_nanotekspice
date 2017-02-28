@@ -5,7 +5,7 @@
 // Login   <veyssi_b@epitech.net>
 //
 // Started on  Mon Feb  6 15:24:43 2017 Baptiste Veyssiere
-// Last update Mon Feb  6 15:30:17 2017 Baptiste Veyssiere
+// Last update Mon Feb 27 22:20:43 2017 Baptiste Veyssiere
 //
 
 #ifndef CPP_NANOTEKSPICE_PARSER_HPP
@@ -13,6 +13,7 @@
 
 # include <string>
 # include <vector>
+# include "all_components.hpp"
 
 namespace nts
 {
@@ -43,7 +44,7 @@ namespace nts
     virtual void feed(std::string const& input) = 0;
     virtual void parseTree(t_ast_node& root) = 0;
     virtual t_ast_node *createTree() = 0;
-    virtual ~IParser();
+    virtual ~IParser() {}
   };
 }
 
