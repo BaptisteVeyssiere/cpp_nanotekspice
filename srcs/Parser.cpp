@@ -5,7 +5,7 @@
 // Login   <veyssi_b@epitech.net>
 //
 // Started on  Mon Feb  6 15:37:22 2017 Baptiste Veyssiere
-// Last update Mon Feb 27 23:17:07 2017 Baptiste Veyssiere
+// Last update Tue Feb 28 17:34:03 2017 Baptiste Veyssiere
 //
 
 #include "Parser.hpp"
@@ -267,7 +267,7 @@ void	Parser::simulate()
   size = this->component->size();
   for (size_t i = 0; i < size; i++)
     if ((*this->component)[i]->type == "output")
-      (*this->component)[i]->component->Compute();
+      (*this->component)[i]->value = (*this->component)[i]->component->Compute();
   for (size_t i = 0; i < size; i++)
     if ((*this->component)[i]->type == "clock")
       {

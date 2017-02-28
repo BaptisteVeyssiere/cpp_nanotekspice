@@ -5,7 +5,7 @@
 // Login   <scutar_n@epitech.net>
 //
 // Started on  Mon Feb 27 10:52:05 2017 Nathan Scutari
-// Last update Mon Feb 27 11:19:51 2017 Nathan Scutari
+// Last update Tue Feb 28 17:25:03 2017 Baptiste Veyssiere
 //
 
 #include <iostream>
@@ -39,7 +39,7 @@ void		c_output::Dump(void) const
   std::cout << "Component : output" << std::endl;
   std::cout << "Pin 1: ";
   if (link.link)
-    std::cout << "linked" << std::endl;
+    std::cout << "linked to pin: " << link.pin_target << std::endl;
   else
     std::cout << "not linked" << std::endl;
 }
