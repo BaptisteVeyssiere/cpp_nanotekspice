@@ -5,7 +5,7 @@
 // Login   <scutar_n@epitech.net>
 //
 // Started on  Thu Feb  9 11:25:28 2017 Nathan Scutari
-// Last update Mon Feb 27 11:33:12 2017 Nathan Scutari
+// Last update Tue Feb 28 18:39:28 2017 Nathan Scutari
 //
 
 #include <iostream>
@@ -30,7 +30,7 @@ c_4030::~c_4030()
 
 nts::Tristate	c_4030::Xor_gate(nts::Tristate pin_input1, nts::Tristate pin_input2)
 {
-  if (pin_input1 == nts::FALSE && pin_input2 == nts::FALSE ||
+  if ((pin_input1 == nts::FALSE && pin_input2 == nts::FALSE) ||
       (pin_input1 == nts::TRUE && pin_input2 == nts::TRUE))
     return (nts::FALSE);
   if (pin_input1 == nts::TRUE || pin_input2 == nts::TRUE)

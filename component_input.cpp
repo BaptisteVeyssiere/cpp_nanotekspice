@@ -5,7 +5,7 @@
 // Login   <scutar_n@epitech.net>
 //
 // Started on  Mon Feb 27 10:52:05 2017 Nathan Scutari
-// Last update Mon Feb 27 11:26:52 2017 Nathan Scutari
+// Last update Tue Feb 28 18:40:28 2017 Nathan Scutari
 //
 
 #include <iostream>
@@ -25,7 +25,7 @@ c_input::~c_input()
 {}
 
 
-nts::Tristate c_input::Compute(size_t pin_num_this)
+nts::Tristate c_input::Compute(UNUSED size_t pin_num_this)
 {
   return (pin_state);
 }

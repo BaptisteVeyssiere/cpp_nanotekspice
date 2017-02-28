@@ -5,7 +5,7 @@
 // Login   <scutar_n@epitech.net>
 //
 // Started on  Mon Feb 27 10:52:05 2017 Nathan Scutari
-// Last update Mon Feb 27 11:27:41 2017 Nathan Scutari
+// Last update Tue Feb 28 18:39:45 2017 Nathan Scutari
 //
 
 #include <iostream>
@@ -18,7 +18,7 @@ c_false::~c_false()
 {}
 
 
-nts::Tristate c_false::Compute(size_t pin_num_this)
+nts::Tristate c_false::Compute(UNUSED size_t pin_num_this)
 {
   return (nts::FALSE);
 }
