@@ -5,14 +5,14 @@
 // Login   <veyssi_b@epitech.net>
 //
 // Started on  Wed Mar  1 14:21:46 2017 Baptiste Veyssiere
-// Last update Wed Mar  1 15:03:01 2017 Baptiste Veyssiere
+// Last update Wed Mar  1 17:20:55 2017 Baptiste Veyssiere
 //
 
 #include "command_handler.hpp"
 
 bool    isLooping;
 
-void    sigint_handler(int sig)
+static void    sigint_handler(int sig)
 {
   (void)sig;
   isLooping = false;
@@ -33,17 +33,8 @@ t_component     *Command_handler::foundObject(std::string const &name)
 
   size = this->component->size();
   for (size_t i = 0; i < size; i++)
-    {
-      if ((*this->component)[i]->name == name)
-        {
-          std::cout << "Object found! => " << (*this->component)[i]->name << " compared to "
-<< name << std::endl;
-          return ((*this->component)[i]);
-        }
-      else
-        std::cout << "Wrong object :( => " << (*this->component)[i]->name << " compared to "
-<< name << std::endl;
-    }
+    if ((*this->component)[i]->name == name)
+      return ((*this->component)[i]);
   throw std::exception();
 }
 
@@ -79,42 +70,31 @@ void	Command_handler::loop()
     simulate();
 }
 
-void	Command_handler::dump()
+void	Command_handler::dump() const
 {
   size_t        size;
 
   size = this->component->size();
   for (size_t i = 0; i < size; i++)
-    {
-      std::cout << "Name: " <<(*this->component)[i]->name << std::endl;
-      (*this->component)[i]->component->Dump();
-      std::cout << std::endl;
-    }
+    (*this->component)[i]->component->Dump();
 }
 
 void	Command_handler::handle_input(std::string const &input)
 {
   size_t        size;
-  std::string   commands[] =
+
+  if (input == "display" || input == "simulate" || input == "loop" || input == "dump")
     {
-      "display",
-      "simulate",
-      "loop",
-      "dump"
-    };
-  void          (Command_handler::*func[4])();
-
-  func[0] = &Command_handler::display;
-  func[1] = &Command_handler::simulate;
-  func[2] = &Command_handler::loop;
-  func[3] = &Command_handler::dump;
-
-  for (int i = 0; i < 4; i++)
-    if (commands[i] == input)
-      {
-        (this->*func[i])();
-        return ;
-      }
+      if (input == "display")
+	this->display();
+      else if (input == "simulate")
+	this->simulate();
+      else if (input == "loop")
+	this->loop();
+      else if (input == "dump")
+	this->dump();
+      return ;
+    }
   size = input.size();
   for (size_t i = 0; i < size; i++)
     if (input[i] == '=')
@@ -125,7 +105,7 @@ void	Command_handler::handle_input(std::string const &input)
   throw std::exception();
 }
 
-void	Command_handler::display()
+void	Command_handler::display() const
 {
   size_t        size;
 
@@ -164,13 +144,10 @@ void    Command_handler::add_value(char const *str)
     }
   if (name == "" || (value != "0" && value != "1"))
     throw std::exception();
-  std::cout << "name: " << name << " / value: " << value << std::endl;
   component = this->foundObject(name);
   if (std::stoi(value) == -1)
     state = nts::UNDEFINED;
   else
     state = std::stoi(value) < 1 ? nts::FALSE : nts::TRUE;
-  if (state == nts::FALSE)
-    std::cout << "state == nts::FALSE" << std::endl;
   ((c_input*)(component->component))->SetPin(state);
 }

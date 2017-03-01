@@ -5,7 +5,7 @@
 // Login   <veyssi_b@epitech.net>
 //
 // Started on  Wed Mar  1 11:45:56 2017 Baptiste Veyssiere
-// Last update Wed Mar  1 15:03:12 2017 Baptiste Veyssiere
+// Last update Wed Mar  1 15:14:32 2017 Baptiste Veyssiere
 //
 
 #ifndef COMMAND_HANDLER_HPP_
@@ -30,9 +30,9 @@ public:
   void	init(std::vector<t_component*>*);
   void	add_value(char const *);
   void	simulate();
-  void	display();
+  void	display() const;
   void	loop();
-  void	dump();
+  void	dump() const;
 };
 
 #endif /* !COMMAND_HANDLER_HPP_ */

@@ -5,7 +5,7 @@
 // Login   <veyssi_b@epitech.net>
 //
 // Started on  Mon Feb  6 15:37:22 2017 Baptiste Veyssiere
-// Last update Wed Mar  1 15:03:49 2017 Baptiste Veyssiere
+// Last update Wed Mar  1 17:22:59 2017 Baptiste Veyssiere
 //
 
 #include "Parser.hpp"
@@ -64,8 +64,7 @@ nts::IComponent	*Parser::create4011(const std::string &value) const
 
 nts::IComponent	*Parser::create4013(const std::string &value) const
 {
-  //return (new c_4013(value));
-  return (NULL);
+  return (new c_4013(value));
 }
 
 nts::IComponent	*Parser::create4017(const std::string &value) const
@@ -230,15 +229,8 @@ t_component	*Parser::foundObject(std::string const &name)
 
   size = this->component->size();
   for (size_t i = 0; i < size; i++)
-    {
-      if ((*this->component)[i]->name == name)
-	{
-	  std::cout << "Object found! => " << (*this->component)[i]->name << " compared to " << name << std::endl;
-	  return ((*this->component)[i]);
-	}
-      else
-	std::cout << "Wrong object :( => " << (*this->component)[i]->name << " compared to " << name << std::endl;
-    }
+    if ((*this->component)[i]->name == name)
+      return ((*this->component)[i]);
   throw std::exception();
 }
 
@@ -255,7 +247,6 @@ void	Parser::makeLinks(nts::t_ast_node& root)
   size = component->children->size();
   for (size_t i = 0; i < size; i++)
     {
-      std::cout << "object searched: " << (*(*component->children)[i]->children)[0]->lexeme << std::endl;
       obj = this->foundObject((*(*component->children)[i]->children)[0]->lexeme);
       obj2 = this->foundObject((*(*component->children)[i]->children)[1]->lexeme);
       pin1 = std::stoi((*(*component->children)[i]->children)[0]->value);
@@ -265,7 +256,6 @@ void	Parser::makeLinks(nts::t_ast_node& root)
 	  obj->component->SetLink(std::stoi((*(*component->children)[i]->children)[0]->value),
 				  *(obj2->component),
 				  std::stoi((*(*component->children)[i]->children)[1]->value));
-	  std::cout << obj->name << ":" << (*(*component->children)[i]->children)[0]->value << " was linked to " << obj2->name << ":" << (*(*component->children)[i]->children)[1]->value << std::endl;
 	  obj->isLinked[pin1] = true;
 	}
       else
@@ -273,7 +263,6 @@ void	Parser::makeLinks(nts::t_ast_node& root)
 	  obj2->component->SetLink(std::stoi((*(*component->children)[i]->children)[1]->value),
 				   *(obj->component),
 				   std::stoi((*(*component->children)[i]->children)[0]->value));
-	  	  std::cout << obj2->name << ":" << (*(*component->children)[i]->children)[1]->value << " was linked to " << obj->name << ":" << (*(*component->children)[i]->children)[0]->value << std::endl;
 	  obj2->isLinked[pin2] = true;
 	}
     }
@@ -293,13 +282,6 @@ void	Parser::checkOutputs() const
 void	Parser::parseTree(nts::t_ast_node& root)
 {
   this->createComponents(root);
-  for (int i = 0; i < 4; i++)
-    {
-      std::cout << "New component created: " << std::endl;
-      std::cout << "Type: " << (*this->component)[i]->type << std::endl;
-      std::cout << "Valeur: " << (*this->component)[i]->value << std::endl;
-      std::cout << "Name: " << (*this->component)[i]->name << std::endl;
-    }
   this->makeLinks(root);
   this->checkOutputs();
 }
@@ -345,9 +327,7 @@ nts::t_ast_node	*Parser::createLinkEnd(int *i) const
 
   link_end->type = nts::ASTNodeType::LINK_END;
   link_end->lexeme = this->getLinkName(i);
-  std::cout << "lexeme: " << link_end->lexeme << std::endl;
   link_end->value = this->getWord(i);
-  std::cout << "value: " << link_end->value << std::endl;
   if (link_end->value == "")
     throw std::exception();
   this->goToData(i);
@@ -395,13 +375,11 @@ nts::t_ast_node	*Parser::createComp(int *i) const
 
   component->type = nts::ASTNodeType::COMPONENT;
   component->lexeme = this->getWord(i);
-  std::cout << "lexeme: " << component->lexeme << std::endl;
   while (this->buffer[*i] == ' ' || this->buffer[*i] == '\t')
     ++(*i);
   if (this->buffer[*i] == '\n')
     throw std::exception();
   component->value = this->getWord(i);
-  std::cout << "value: " << component->value << std::endl;
   for (size_t j = *i; this->buffer[j] != '\n'; j++)
     if (this->buffer[j] != ' ' && this->buffer[j] != '\t')
       throw std::exception();
@@ -437,26 +415,6 @@ nts::t_ast_node *Parser::createSection(int *i, std::string const &section) const
   return (this->createLinks(i));
 }
 
-void	aff_tree(nts::t_ast_node *node)
-{
-  if (node->type == nts::ASTNodeType::DEFAULT)
-    std::cout << "Default:";
-  else if (node->type == nts::ASTNodeType::COMPONENT)
-    std::cout << "Component:";
-  else if (node->type == nts::ASTNodeType::LINK)
-    std::cout << "Link:";
-  else if (node->type == nts::ASTNodeType::SECTION)
-    std::cout << "Section:";
-  else if (node->type == nts::ASTNodeType::LINK_END)
-    std::cout << "Link end:";
-  if (node->type != nts::ASTNodeType::LINK && node->type != nts::ASTNodeType::DEFAULT)
-    std::cout << node->lexeme << " --> " << node->value << std::endl;
-  else
-    std::cout << std::endl;
-  for (size_t j = 0; j < node->children->size(); j++)
-    aff_tree((*node->children)[j]);
-}
-
 static bool	compareByAscii(const t_component *a, const t_component *b)
 {
   return (a->name < b->name);
@@ -488,7 +446,6 @@ nts::t_ast_node	*Parser::createTree()
   this->goToData(&i);
   if (this->buffer[i] == '.')
     throw std::exception();
-  aff_tree(root);
   this->parseTree(*root);
   this->sortComponents();
   return (root);
@@ -497,4 +454,22 @@ nts::t_ast_node	*Parser::createTree()
 std::vector<t_component*>	*Parser::getSystem() const
 {
   return (this->component);
+}
+
+void	Parser::freeSystem()
+{
+  size_t	size;
+
+  size = 0;
+  if (this->component)
+    size = this->component->size();
+  for (size_t i = 0; i < size; i++)
+    {
+      if ((*this->component)[i]->component)
+	delete (*this->component)[i]->component;
+      if ((*this->component)[i])
+	delete (*this->component)[i];
+    }
+  if (this->component)
+    delete this->component;
 }

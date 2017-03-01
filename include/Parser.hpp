@@ -5,7 +5,7 @@
 // Login   <veyssi_b@epitech.net>
 //
 // Started on  Mon Feb  6 15:30:49 2017 Baptiste Veyssiere
-// Last update Wed Mar  1 15:03:26 2017 Baptiste Veyssiere
+// Last update Wed Mar  1 15:46:25 2017 Baptiste Veyssiere
 //
 
 #ifndef PARSER_HPP
@@ -17,12 +17,7 @@
 #include <string>
 #include <csignal>
 #include "IParser.hpp"
-#include "component_4001.hpp"
-#include "component_4008.hpp"
-#include "component_4011.hpp"
-#include "component_4030.hpp"
-#include "component_4071.hpp"
-#include "component_4081.hpp"
+#include "all_components.hpp"
 
 typedef struct		s_component
 {
@@ -50,6 +45,7 @@ public:
   virtual void				parseTree(nts::t_ast_node& root);
   virtual nts::t_ast_node		*createTree();
   std::vector<t_component*>		*getSystem() const;
+  void					freeSystem();
 
 private:
   void				goToNextLine(int*) const;
