@@ -5,10 +5,10 @@
 // Login   <veyssi_b@epitech.net>
 //
 // Started on  Mon Feb  6 15:43:02 2017 Baptiste Veyssiere
-// Last update Mon Feb 27 23:11:30 2017 Baptiste Veyssiere
+// Last update Wed Mar  1 14:55:36 2017 Baptiste Veyssiere
 //
 
-#include "Parser.hpp"
+#include "command_handler.hpp"
 
 int	aff_error_msg(std::string const &msg, const int ret)
 {
@@ -41,22 +41,24 @@ int	parse_config_file(int ac, char**av, Parser *parser)
 
 int	main(int ac, char **av)
 {
-  Parser	parser;
-  std::string	input;
+  Parser		parser;
+  std::string		input;
+  Command_handler	handler;
 
   if (parse_config_file(ac, av, &parser))
     return (1);
+  handler.init(parser.getSystem());
   for (int i = 2; i < ac; i++)
-    parser.add_value(av[i]);
+    handler.add_value(av[i]);
   input = "";
-  parser.simulate();
-  parser.display();
+  handler.simulate();
+  handler.display();
   while (input != "exit" && !(std::cin.eof()))
     {
       std::cout << "> ";
       std::cin >> input;
       if (input != "exit" && !(std::cin.eof()))
-	parser.handle_input(input);
+	handler.handle_input(input);
     }
   return (0);
 }

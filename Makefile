@@ -29,7 +29,8 @@ SRC	= srcs/component_4001.cpp \
 	srcs/isValid.cpp \
 	srcs/main.cpp \
 	srcs/Parser.cpp \
-	srcs/pin_check.cpp
+	srcs/pin_check.cpp \
+	srcs/command_handler.cpp
 
 SRCDIR	= srcs
 
