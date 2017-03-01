@@ -5,7 +5,7 @@
 // Login   <veyssi_b@epitech.net>
 //
 // Started on  Wed Mar  1 14:21:46 2017 Baptiste Veyssiere
-// Last update Wed Mar  1 17:20:55 2017 Baptiste Veyssiere
+// Last update Wed Mar  1 17:33:55 2017 Baptiste Veyssiere
 //
 
 #include "command_handler.hpp"
@@ -51,12 +51,12 @@ void	Command_handler::simulate()
       {
         if ((*this->component)[i]->value == 0)
           {
-            ((c_input*)(*this->component)[i]->component)->SetPin(nts::TRUE);
+            ((c_clock*)(*this->component)[i]->component)->SetPin(nts::TRUE);
             (*this->component)[i]->value = 1;
           }
         else if ((*this->component)[i]->value == 1)
           {
-            ((c_input*)(*this->component)[i]->component)->SetPin(nts::FALSE);
+            ((c_clock*)(*this->component)[i]->component)->SetPin(nts::FALSE);
             (*this->component)[i]->value = 0;
           }
       }

@@ -5,7 +5,7 @@
 // Login   <veyssi_b@epitech.net>
 //
 // Started on  Mon Feb  6 15:37:22 2017 Baptiste Veyssiere
-// Last update Wed Mar  1 17:27:00 2017 Baptiste Veyssiere
+// Last update Wed Mar  1 17:34:19 2017 Baptiste Veyssiere
 //
 
 #include "Parser.hpp"
@@ -274,7 +274,7 @@ void	Parser::checkOutputs() const
 
   size = this->component->size();
   for (size_t i = 0; i < size; i++)
-    if ((*this->component)[i]->type == "output" && (*this->component)[i]->isLinked[0] == false)
+    if ((*this->component)[i]->type == "output" && (*this->component)[i]->isLinked[1] == false)
       throw std::exception();
 }
 
