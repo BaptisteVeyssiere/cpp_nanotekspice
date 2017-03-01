@@ -5,11 +5,7 @@
 // Login   <veyssi_b@epitech.net>
 //
 // Started on  Tue Feb 14 11:13:48 2017 Baptiste Veyssiere
-<<<<<<< HEAD
-// Last update Wed Mar  1 14:34:51 2017 Nathan Scutari
-=======
-// Last update Wed Mar  1 15:05:02 2017 Baptiste Veyssiere
->>>>>>> 6fada08f795d8d6e504d9097dc5dd3285ae64b3d
+// Last update Wed Mar  1 16:03:19 2017 Nathan Scutari
 //
 
 // 1: Input, 2: Pin Input, 3: Output, 4: Pin Output
