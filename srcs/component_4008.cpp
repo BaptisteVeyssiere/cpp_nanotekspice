@@ -5,7 +5,7 @@
 // Login   <scutar_n@epitech.net>
 //
 // Started on  Thu Feb  9 11:25:28 2017 Nathan Scutari
-// Last update Fri Feb 17 10:32:43 2017 Nathan Scutari
+// Last update Wed Mar  1 15:07:19 2017 Nathan Scutari
 //
 
 #include <iostream>
@@ -33,9 +33,6 @@ c_4008::c_4008(UNUSED const std::string &value)
   pin_order[2][1] = 2;
   pin_order[3][0] = 1;
   pin_order[3][1] = 15;
-  pin_state[6] = nts::TRUE;
-  pin_state[7] = nts::FALSE;
-  carry_out[0] = nts::TRUE;
 }
 
 c_4008::~c_4008()
@@ -68,7 +65,7 @@ nts::Tristate	c_4008::Compute_si(size_t si)
       carry_out[si] = nts::UNDEFINED;
       return (nts::UNDEFINED);
     }
-  if ((si == 0 && (link[9].link == NULL || (ret3 = link[9].link->Compute(link[9].pin_target)) == nts::UNDEFINED))
+  if ((si == 0 && (ret3 = this->Compute(9)) == nts::UNDEFINED)
       || (si != 0 && (ret3 = this->Compute_si(si - 1)) == nts::UNDEFINED))
     {
       carry_out[si] = nts::UNDEFINED;
@@ -78,6 +75,7 @@ nts::Tristate	c_4008::Compute_si(size_t si)
     ret3 = carry_out[si - 1];
   sum = Tristate_to_int(ret1) + Tristate_to_int(ret2) + Tristate_to_int(ret3);
   carry_out[si] = Int_to_tristate(sum / 2);
+  pin_state[13] = carry_out[si];
   return (Int_to_tristate(sum % 2));
 }
 
@@ -85,29 +83,24 @@ nts::Tristate	c_4008::Compute(size_t pin_num_this)
 {
   nts::Tristate	ret;
 
+  if (computed[pin_num_this - 1] == true)
+    return (pin_state[pin_num_this - 1]);
+  computed[pin_num_this - 1] = true;
   if (pin_num_this >= 10 && pin_num_this <= 13)
+    ret =  this->Compute_si(pin_num_this - 10);
+  else if (pin_num_this == 14)
     {
-      computed[pin_num_this - 1] = true;
-      ret =  this->Compute_si(pin_num_this - 10);
-      computed[pin_num_this - 1] = false;
-      return (ret);
+      for (int i = 0 ; i < 4 ; ++i)
+	this->Compute_si(i);
+      ret = pin_state[13];
     }
-  if (pin_num_this == 14)
-    {
-      this->Compute_si(3);
-      return (carry_out[3]);
-    }
-  if (computed[pin_num_this - 1] == false)
-    {
-      computed[pin_num_this - 1] = true;
-      if (this->link[pin_num_this - 1].link)
-	ret = link[pin_num_this - 1].link->Compute(link[pin_num_this - 1].pin_target);
-      else
-	ret =  pin_state[pin_num_this - 1];
-      computed[pin_num_this - 1] = false;
-      return (ret);
-    }
-  return (this->pin_state[pin_num_this - 1]);
+  else if (this->link[pin_num_this - 1].link)
+    ret = link[pin_num_this - 1].link->Compute(link[pin_num_this - 1].pin_target);
+  else
+    ret =  pin_state[pin_num_this - 1];
+  computed[pin_num_this - 1] = false;
+  pin_state[pin_num_this - 1] = ret;
+  return (ret);
 }
 
 void		c_4008::Dump(void) const
@@ -128,6 +121,6 @@ void		c_4008::SetLink(size_t pin_num_this,
 				size_t pin_num_target)
 
 {
-  link[pin_num_this].link = &component;
-  link[pin_num_this].pin_target = pin_num_target;
+  link[pin_num_this - 1].link = &component;
+  link[pin_num_this - 1].pin_target = pin_num_target;
 }

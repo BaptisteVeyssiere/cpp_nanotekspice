@@ -5,7 +5,7 @@
 // Login   <veyssi_b@epitech.net>
 //
 // Started on  Tue Feb 14 11:13:48 2017 Baptiste Veyssiere
-// Last update Tue Feb 14 19:56:58 2017 Baptiste Veyssiere
+// Last update Wed Mar  1 14:34:51 2017 Nathan Scutari
 //
 
 // 1: Input, 2: Pin Input, 3: Output, 4: Pin Output
@@ -60,7 +60,7 @@ char	c4008_pin(int pin)
 {
   if (pin < 1 || pin > 15 || pin == 8)
     throw std::exception();
-  if (pin == 10 || pin == 11 || pin == 12 || pin == 13)
+  if (pin == 10 || pin == 11 || pin == 12 || pin == 13 || pin == 14)
     return (4);
   return (2);
 }
