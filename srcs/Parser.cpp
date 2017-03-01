@@ -5,7 +5,7 @@
 // Login   <veyssi_b@epitech.net>
 //
 // Started on  Mon Feb  6 15:37:22 2017 Baptiste Veyssiere
-// Last update Tue Feb 28 17:34:03 2017 Baptiste Veyssiere
+// Last update Wed Mar  1 11:43:29 2017 Nathan Scutari
 //
 
 #include "Parser.hpp"
@@ -298,7 +298,11 @@ void	Parser::dump()
 
   size = this->component->size();
   for (size_t i = 0; i < size; i++)
-    (*this->component)[i]->component->Dump();
+    {
+      std::cout << "Name: " <<(*this->component)[i]->name << std::endl;
+      (*this->component)[i]->component->Dump();
+      std::cout << std::endl;
+    }
 }
 
 void	Parser::handle_input(std::string const &input)
