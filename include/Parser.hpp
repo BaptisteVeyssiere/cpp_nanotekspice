@@ -5,7 +5,7 @@
 // Login   <veyssi_b@epitech.net>
 //
 // Started on  Mon Feb  6 15:30:49 2017 Baptiste Veyssiere
-// Last update Mon Feb 27 23:11:15 2017 Baptiste Veyssiere
+// Last update Wed Mar  1 15:03:26 2017 Baptiste Veyssiere
 //
 
 #ifndef PARSER_HPP
@@ -46,13 +46,10 @@ public:
   Parser const &operator=(Parser const&);
 
 public:
-  virtual void			feed(std::string const& input);
-  virtual void			parseTree(nts::t_ast_node& root);
-  virtual nts::t_ast_node	*createTree();
-  void				add_value(char const *str);
-  void				handle_input(std::string const &input);
-  void				simulate();
-  void				display();
+  virtual void				feed(std::string const& input);
+  virtual void				parseTree(nts::t_ast_node& root);
+  virtual nts::t_ast_node		*createTree();
+  std::vector<t_component*>		*getSystem() const;
 
 private:
   void				goToNextLine(int*) const;
@@ -70,8 +67,6 @@ private:
   t_component			*foundObject(std::string const &name);
   void				makeLinks(nts::t_ast_node& root);
   void				checkOutputs() const;
-  void				loop();
-  void				dump();
   nts::IComponent		*createComponent(const std::string &type, const std::string &value);
   nts::IComponent		*create4001(const std::string &value) const;
   nts::IComponent		*create4008(const std::string &value) const;

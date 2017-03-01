@@ -5,18 +5,10 @@
 // Login   <veyssi_b@epitech.net>
 //
 // Started on  Mon Feb  6 15:37:22 2017 Baptiste Veyssiere
-// Last update Wed Mar  1 11:43:29 2017 Nathan Scutari
+// Last update Wed Mar  1 15:03:49 2017 Baptiste Veyssiere
 //
 
 #include "Parser.hpp"
-
-bool	isLooping;
-
-void	sigint_handler(int sig)
-{
-  (void)sig;
-  isLooping = false;
-}
 
 Parser::Parser()
 {
@@ -209,135 +201,6 @@ nts::IComponent	*Parser::createComponent(const std::string &type, const std::str
 	return ((this->*fptr[i])(value));
     return (NULL);
 }
-
-void	Parser::add_value(char const *str)
-{
-  std::string	name;
-  std::string	value;
-  bool		isName;
-  int		i;
-  t_component	*component;
-  nts::Tristate	state;
-
-  name = "";
-  value = "";
-  isName = true;
-  i = -1;
-  while (str && str[++i])
-    {
-      if (str[i] == '=')
-	{
-	  if (isName == false)
-	    throw std::exception();
-	  isName = false;
-	  continue;
-	}
-      if (isName == true)
-	name += str[i];
-      else
-	value += str[i];
-    }
-  if (name == "" || (value != "0" && value != "1"))
-    throw std::exception();
-  std::cout << "name: " << name << " / value: " << value << std::endl;
-  component = this->foundObject(name);
-  if (std::stoi(value) == -1)
-    state = nts::UNDEFINED;
-  else
-    state = std::stoi(value) < 1 ? nts::FALSE : nts::TRUE;
-  if (state == nts::FALSE)
-    std::cout << "state == nts::FALSE" << std::endl;
-  ((c_input*)(component->component))->SetPin(state);
-}
-
-void	Parser::display()
-{
-  size_t	size;
-
-  size = this->component->size();
-  for (size_t i = 0; i < size; i++)
-    if ((*this->component)[i]->type == "output")
-      std::cout << (*this->component)[i]->name << "=" << (*this->component)[i]->value << std::endl;
-}
-
-void	Parser::simulate()
-{
-  size_t	size;
-
-  size = this->component->size();
-  for (size_t i = 0; i < size; i++)
-    if ((*this->component)[i]->type == "output")
-      (*this->component)[i]->value = (*this->component)[i]->component->Compute();
-  for (size_t i = 0; i < size; i++)
-    if ((*this->component)[i]->type == "clock")
-      {
-	if ((*this->component)[i]->value == 0)
-	  {
-	    ((c_input*)(*this->component)[i]->component)->SetPin(nts::TRUE);
-	    (*this->component)[i]->value = 1;
-	  }
-	else if ((*this->component)[i]->value == 1)
-	  {
-	    ((c_input*)(*this->component)[i]->component)->SetPin(nts::FALSE);
-	    (*this->component)[i]->value = 0;
-	  }
-      }
-}
-
-void	Parser::loop()
-{
-  isLooping = true;
-  signal(SIGINT, sigint_handler);
-  while (isLooping)
-    simulate();
-}
-
-void	Parser::dump()
-{
-  size_t	size;
-
-  size = this->component->size();
-  for (size_t i = 0; i < size; i++)
-    {
-      std::cout << "Name: " <<(*this->component)[i]->name << std::endl;
-      (*this->component)[i]->component->Dump();
-      std::cout << std::endl;
-    }
-}
-
-void	Parser::handle_input(std::string const &input)
-{
-  size_t	size;
-  std::string	commands[] =
-    {
-      "display",
-      "simulate",
-      "loop",
-      "dump"
-    };
-  void		(Parser::*func[4])();
-
-  func[0] = &Parser::display;
-  func[1] = &Parser::simulate;
-  func[2] = &Parser::loop;
-  func[3] = &Parser::dump;
-
-  for (int i = 0; i < 4; i++)
-    if (commands[i] == input)
-      {
-	(this->*func[i])();
-	return ;
-      }
-  size = input.size();
-  for (size_t i = 0; i < size; i++)
-    if (input[i] == '=')
-      {
-	this->add_value(input.c_str());
-	return ;
-      }
-  throw std::exception();
-}
-
 
 void	Parser::createComponents(nts::t_ast_node& root)
 {
@@ -629,4 +492,9 @@ nts::t_ast_node	*Parser::createTree()
   this->parseTree(*root);
   this->sortComponents();
   return (root);
+}
+
+std::vector<t_component*>	*Parser::getSystem() const
+{
+  return (this->component);
 }
