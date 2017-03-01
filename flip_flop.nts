@@ -14,3 +14,5 @@ data:1		flip_flop:5
 reset:1		flip_flop:4
 set:1		flip_flop:6
 clock:1		flip_flop:3
+q1:1		flip_flop:1
+q2:1		flip_flop:2

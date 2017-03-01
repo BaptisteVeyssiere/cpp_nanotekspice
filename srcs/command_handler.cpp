@@ -5,7 +5,7 @@
 // Login   <veyssi_b@epitech.net>
 //
 // Started on  Wed Mar  1 14:21:46 2017 Baptiste Veyssiere
-// Last update Wed Mar  1 17:20:55 2017 Baptiste Veyssiere
+// Last update Wed Mar  1 17:29:55 2017 Nathan Scutari
 //
 
 #include "command_handler.hpp"
@@ -76,7 +76,11 @@ void	Command_handler::dump() const
 
   size = this->component->size();
   for (size_t i = 0; i < size; i++)
-    (*this->component)[i]->component->Dump();
+    {
+      std::cout << "Name: " << (*this->component)[i]->name << std::endl;
+      (*this->component)[i]->component->Dump();
+      std::cout << std::endl;
+    }
 }
 
 void	Command_handler::handle_input(std::string const &input)
