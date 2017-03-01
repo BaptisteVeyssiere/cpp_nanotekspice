@@ -5,7 +5,7 @@
 // Login   <veyssi_b@epitech.net>
 //
 // Started on  Wed Mar  1 11:45:56 2017 Baptiste Veyssiere
-// Last update Wed Mar  1 15:14:32 2017 Baptiste Veyssiere
+// Last update Wed Mar  1 17:55:31 2017 Baptiste Veyssiere
 //
 
 #ifndef COMMAND_HANDLER_HPP_
@@ -34,5 +34,10 @@ public:
   void	loop();
   void	dump() const;
 };
+
+int	aff_error_msg(std::string const &, const int);
+int	read_config_file(std::string const &, Parser*);
+void	free_tree(nts::t_ast_node*);
+int	parse_config_file(int, char**, Parser*);
 
 #endif /* !COMMAND_HANDLER_HPP_ */
