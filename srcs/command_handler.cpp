@@ -5,7 +5,7 @@
 // Login   <veyssi_b@epitech.net>
 //
 // Started on  Wed Mar  1 14:21:46 2017 Baptiste Veyssiere
-// Last update Wed Mar  1 17:35:44 2017 Nathan Scutari
+// Last update Wed Mar  1 17:38:57 2017 Baptiste Veyssiere
 //
 
 #include "command_handler.hpp"
@@ -154,4 +154,5 @@ void    Command_handler::add_value(char const *str)
   else
     state = std::stoi(value) < 1 ? nts::FALSE : nts::TRUE;
   ((c_input*)(component->component))->SetPin(state);
+  component->value = std::stoi(value);
 }
