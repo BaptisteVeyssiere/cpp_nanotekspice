@@ -5,7 +5,7 @@
 // Login   <scutar_n@epitech.net>
 //
 // Started on  Thu Feb  9 11:25:28 2017 Nathan Scutari
-// Last update Wed Mar  1 17:14:45 2017 Nathan Scutari
+// Last update Wed Mar  1 18:21:24 2017 Nathan Scutari
 //
 
 #include <iostream>
@@ -20,11 +20,11 @@ c_4013::c_4013(UNUSED const std::string &value)
   char		ttable[6][6] =
     {
       {'0', '0', '0', '0', '0', '1'},
-      {'0', '1', '0', '0', '1', '0'},
-      {'1', 'x', '0', '0', 'q', 'q'},
-      {'x', 'x', '1', '0', '0', '1'},
-      {'x', 'x', '0', '1', '1', '0'},
-      {'x', 'x', '1', '1', '1', '1'}
+      {'0', '0', '1', '0', '1', '0'},
+      {'1', '0', 'x', '0', 'q', 'q'},
+      {'x', '1', 'x', '0', '0', '1'},
+      {'x', '0', 'x', '1', '1', '0'},
+      {'x', '1', 'x', '1', '1', '1'}
       };
 
   x = -1;
@@ -82,6 +82,8 @@ nts::Tristate	c_4013::Compute_FF1(size_t pin_num_this)
   int	error;
 
   i = -1;
+  if (pin_num_this == 2)
+    std::cout << std::endl;
   while (++i < 6)
     {
       y = -1;
@@ -92,6 +94,7 @@ nts::Tristate	c_4013::Compute_FF1(size_t pin_num_this)
       if (error == 0)
 	break;
     }
+  std::cout << i << std::endl;
   if (i >= 6)
     return (nts::UNDEFINED);
   pin_state[0] = Char_To_Tristate(ttable[i][4], pin_state[0]);
@@ -118,8 +121,8 @@ nts::Tristate	c_4013::Compute_FF2(size_t pin_num_this)
     }
   if (i >= 6)
     return (nts::UNDEFINED);
-  pin_state[13] = Char_To_Tristate(ttable[i][4], pin_state[13]);
-  pin_state[12] = Char_To_Tristate(ttable[i][5], pin_state[12]);
+  pin_state[11] = Char_To_Tristate(ttable[i][5], pin_state[11]);
+  pin_state[12] = Char_To_Tristate(ttable[i][4], pin_state[12]);
   return (pin_state[pin_num_this - 1]);
 }
 
