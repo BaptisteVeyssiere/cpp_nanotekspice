@@ -5,7 +5,7 @@
 // Login   <veyssi_b@epitech.net>
 //
 // Started on  Mon Feb  6 15:37:22 2017 Baptiste Veyssiere
-// Last update Thu Mar  2 18:40:41 2017 Baptiste Veyssiere
+// Last update Thu Mar  2 20:00:58 2017 Baptiste Veyssiere
 //
 
 #include "Parser.hpp"
@@ -275,7 +275,7 @@ void	Parser::checkOutputs() const
   size = this->component->size();
   for (size_t i = 0; i < size; i++)
     if ((*this->component)[i]->type == "output" && (*this->component)[i]->isLinked[1] == false)
-      throw std::exception();
+      throw parsing_error("Output '" + (*this->component)[i]->name + "' has not been linked");
 }
 
 void	Parser::parseTree(nts::t_ast_node& root)
@@ -313,10 +313,7 @@ std::string const	Parser::getLinkName(int *i) const
   if (buffer[*i] == ':')
     ++(*i);
   else
-    {
-      std::cout << "Pin of the " << name << " component was not find" << std::endl;
-      throw std::exception();
-    }
+    throw parsing_error("Pin of the '" + name + "' component has not been found");
   return (name);
 }
 
@@ -328,8 +325,8 @@ nts::t_ast_node	*Parser::createLinkEnd(int *i) const
   link_end->lexeme = this->getLinkName(i);
   link_end->value = this->getWord(i);
   if (link_end->value == "")
-    throw std::exception();
-  this->goToData(i);
+    throw parsing_error("Pin of the '" + link_end->lexeme + "' component has not been found");
+  //this->goToData(i);
   return (link_end);
 }
 
@@ -343,13 +340,17 @@ nts::t_ast_node	*Parser::createLink(int *i) const
       link->children->push_back(this->createLinkEnd(i));
       while (this->buffer[*i] == ' ' || this->buffer[*i] == '\t')
 	++(*i);
-      if (this->buffer[*i] == '\n')
-	throw std::exception();
+      if (this->buffer[*i] == '\n' && j == 0)
+	throw parsing_error("Unexpected newline");
     }
   if (this->buffer[*i] == ' ' || this->buffer[*i] == '\t' || this->buffer[*i] == '\n')
-    for (size_t j = *i; this->buffer[j] != '\n'; j++)
-      if (this->buffer[j] != ' ' && this->buffer[j] != '\t')
-	throw std::exception();
+    {
+      for (size_t j = *i; this->buffer[j] != '\n'; j++)
+	if (this->buffer[j] != ' ' && this->buffer[j] != '\t')
+	  throw parsing_error("Unexpected data found at end of line");
+    }
+  else if (this->buffer[*i])
+    throw parsing_error("Unexpected data found at end of line");
   return (link);
 }
 
@@ -377,11 +378,11 @@ nts::t_ast_node	*Parser::createComp(int *i) const
   while (this->buffer[*i] == ' ' || this->buffer[*i] == '\t')
     ++(*i);
   if (this->buffer[*i] == '\n')
-    throw std::exception();
+    throw parsing_error("Unexpected newline");
   component->value = this->getWord(i);
   for (size_t j = *i; this->buffer[j] != '\n'; j++)
     if (this->buffer[j] != ' ' && this->buffer[j] != '\t')
-      throw std::exception();
+      throw parsing_error("Unexpected data found at end of line");
   return (component);
 }
 
@@ -403,10 +404,7 @@ nts::t_ast_node	*Parser::createChipset(int *i) const
 nts::t_ast_node *Parser::createSection(int *i, std::string const &section) const
 {
   if (this->buffer.find(section, *i) != (unsigned int)*i)
-    {
-      std::cout << "Section name not recognized" << std::endl;
-      throw std::exception();
-    }
+    throw parsing_error("Section name not recognized");
   else
     *i += section.size();
   if (section == "chipsets:")
@@ -444,7 +442,7 @@ nts::t_ast_node	*Parser::createTree()
     }
   this->goToData(&i);
   if (this->buffer[i] == '.')
-    throw std::exception();
+    throw parsing_error("Unexpected third section found");
   this->parseTree(*root);
   this->sortComponents();
   return (root);

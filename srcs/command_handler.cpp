@@ -5,7 +5,7 @@
 // Login   <veyssi_b@epitech.net>
 //
 // Started on  Wed Mar  1 14:21:46 2017 Baptiste Veyssiere
-// Last update Thu Mar  2 18:26:27 2017 Baptiste Veyssiere
+// Last update Thu Mar  2 20:07:35 2017 Baptiste Veyssiere
 //
 
 #include "command_handler.hpp"
@@ -35,7 +35,7 @@ t_component     *Command_handler::foundObject(std::string const &name)
   for (size_t i = 0; i < size; i++)
     if ((*this->component)[i]->name == name)
       return ((*this->component)[i]);
-  throw std::exception();
+  throw parsing_error("Component '" + name + "' has not been defined");
 }
 
 void	Command_handler::simulate()
@@ -114,7 +114,7 @@ void	Command_handler::handle_input(std::string const &input)
         this->add_value(input.c_str());
         return ;
       }
-  throw std::exception();
+  throw parsing_error("Unknown command");
 }
 
 void	Command_handler::display() const
@@ -152,7 +152,7 @@ void    Command_handler::add_value(char const *str)
       if (str[i] == '=')
         {
           if (isName == false)
-            throw std::exception();
+            throw parsing_error("Unexpected value at end of command");
           isName = false;
           continue;
         }
@@ -162,7 +162,7 @@ void    Command_handler::add_value(char const *str)
         value += str[i];
     }
   if (name == "" || (value != "0" && value != "1"))
-    throw std::exception();
+    throw parsing_error("Component name has not been defined");
   component = this->foundObject(name);
   if (std::stoi(value) == -1)
     state = nts::UNDEFINED;

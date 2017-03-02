@@ -6,4 +6,4 @@ clock		a
 output		o
 
 .links:
-b:1		o:1
+a:3		o:1
