@@ -20,6 +20,7 @@ MKDIR	= mkdir -p
 SRC	= srcs/component_4001.cpp \
 	srcs/AComponent.cpp \
 	srcs/component_4008.cpp \
+	srcs/component_4069.cpp \
 	srcs/component_4011.cpp \
 	srcs/component_4013.cpp \
 	srcs/component_4030.cpp \
