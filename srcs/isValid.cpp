@@ -5,7 +5,7 @@
 // Login   <veyssi_b@epitech.net>
 //
 // Started on  Mon Feb 13 19:46:53 2017 Baptiste Veyssiere
-// Last update Wed Mar  1 17:17:38 2017 Baptiste Veyssiere
+// Last update Thu Mar  2 15:25:47 2017 Baptiste Veyssiere
 //
 
 #include "Parser.hpp"
@@ -73,15 +73,17 @@ bool	link_isValid(t_component *obj, t_component *obj2, int pin1, int pin2)
   type2 = pinType(obj2, pin2);
   if ((type1 == 3 && type2 == 4) ||
       (type1 == 2 && type2 == 1) ||
-      (type1 == 2 && type2 == 4))
+      (type1 == 2 && type2 == 4) ||
+      (type1 == 3 && type2 == 1))
     {
       if (obj->isLinked[pin1] == true)
 	throw std::exception();
       return (true);
     }
   else if ((type1 == 4 && type2 == 3) ||
-      (type1 == 1 && type2 == 2) ||
-      (type1 == 4 && type2 == 2))
+	   (type1 == 1 && type2 == 2) ||
+	   (type1 == 4 && type2 == 2) ||
+	   (type1 == 1 && type2 == 3))
     {
       if (obj2->isLinked[pin2] == true)
 	throw std::exception();
