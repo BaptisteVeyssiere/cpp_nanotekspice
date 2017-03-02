@@ -5,7 +5,7 @@
 // Login   <veyssi_b@epitech.net>
 //
 // Started on  Wed Mar  1 14:21:46 2017 Baptiste Veyssiere
-// Last update Wed Mar  1 17:38:57 2017 Baptiste Veyssiere
+// Last update Thu Mar  2 14:08:19 2017 Baptiste Veyssiere
 //
 
 #include "command_handler.hpp"
@@ -112,11 +112,18 @@ void	Command_handler::handle_input(std::string const &input)
 void	Command_handler::display() const
 {
   size_t        size;
+  char		value;
 
   size = this->component->size();
   for (size_t i = 0; i < size; i++)
     if ((*this->component)[i]->type == "output")
-      std::cout << (*this->component)[i]->name << "=" << (*this->component)[i]->value << std::endl;
+      {
+	if ((*this->component)[i]->value == -1)
+	  value = 'U';
+	else
+	  value = (*this->component)[i]->value == 1 ? '1' : '0';
+	std::cout << (*this->component)[i]->name << "=" << value << std::endl;
+      }
 }
 
 void    Command_handler::add_value(char const *str)
