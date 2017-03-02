@@ -5,7 +5,7 @@
 // Login   <veyssi_b@epitech.net>
 //
 // Started on  Wed Mar  1 14:21:46 2017 Baptiste Veyssiere
-// Last update Thu Mar  2 18:16:01 2017 Baptiste Veyssiere
+// Last update Thu Mar  2 18:26:27 2017 Baptiste Veyssiere
 //
 
 #include "command_handler.hpp"
@@ -66,7 +66,7 @@ void	Command_handler::simulate()
 	(*this->component)[i]->type != "output" &&
 	(*this->component)[i]->type != "true" &&
 	(*this->component)[i]->type != "false")
-      ((AComponent*)((*this->component)[i]->component))->Simulate_End();
+      ((AComponent*)((*this->component)[i]->component))->Simulation_End();
 
 }
 

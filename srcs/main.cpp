@@ -5,7 +5,7 @@
 // Login   <veyssi_b@epitech.net>
 //
 // Started on  Mon Feb  6 15:43:02 2017 Baptiste Veyssiere
-// Last update Thu Mar  2 15:31:43 2017 Baptiste Veyssiere
+// Last update Thu Mar  2 18:32:15 2017 Baptiste Veyssiere
 //
 
 #include "command_handler.hpp"
@@ -34,7 +34,7 @@ int	main(int ac, char **av)
 	    handler.handle_input(input);
 	}
     }
-  catch (const std::exception& e)
+  catch (const parsing_error& e)
     {
       parser.freeSystem();
       throw e;

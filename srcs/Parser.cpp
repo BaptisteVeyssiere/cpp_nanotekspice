@@ -5,7 +5,7 @@
 // Login   <veyssi_b@epitech.net>
 //
 // Started on  Mon Feb  6 15:37:22 2017 Baptiste Veyssiere
-// Last update Thu Mar  2 15:22:15 2017 Baptiste Veyssiere
+// Last update Thu Mar  2 18:40:41 2017 Baptiste Veyssiere
 //
 
 #include "Parser.hpp"
@@ -219,7 +219,7 @@ void	Parser::createComponents(nts::t_ast_node& root)
       (*this->component)[i]->value = -1;
       for (int j = i - 1; j >= 0; j--)
 	if ((*this->component)[i]->name == (*this->component)[j]->name)
-	  throw std::exception();
+	  throw parsing_error(std::string("Component '") + (*this->component)[j]->name + std::string("' has already been defined"));
     }
 }
 
@@ -231,7 +231,7 @@ t_component	*Parser::foundObject(std::string const &name)
   for (size_t i = 0; i < size; i++)
     if ((*this->component)[i]->name == name)
       return ((*this->component)[i]);
-  throw std::exception();
+  throw parsing_error("Component '" + name + "' has not been defined");
 }
 
 void	Parser::makeLinks(nts::t_ast_node& root)

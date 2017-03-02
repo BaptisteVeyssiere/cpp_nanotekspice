@@ -5,7 +5,7 @@
 // Login   <veyssi_b@epitech.net>
 //
 // Started on  Mon Feb  6 15:30:49 2017 Baptiste Veyssiere
-// Last update Wed Mar  1 15:46:25 2017 Baptiste Veyssiere
+// Last update Thu Mar  2 18:24:13 2017 Baptiste Veyssiere
 //
 
 #ifndef PARSER_HPP
@@ -18,6 +18,7 @@
 #include <csignal>
 #include "IParser.hpp"
 #include "all_components.hpp"
+#include "parsing_error.hpp"
 
 typedef struct		s_component
 {
