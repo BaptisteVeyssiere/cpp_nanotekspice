@@ -5,11 +5,7 @@
 // Login   <veyssi_b@epitech.net>
 //
 // Started on  Mon Feb  6 15:43:02 2017 Baptiste Veyssiere
-<<<<<<< HEAD
-// Last update Thu Mar  2 15:23:29 2017 Baptiste Veyssiere
-=======
-// Last update Thu Mar  2 14:56:13 2017 Nathan Scutari
->>>>>>> 7023bac8e455e625e92a89cabbe35dd40694cce0
+// Last update Thu Mar  2 15:31:43 2017 Baptiste Veyssiere
 //
 
 #include "command_handler.hpp"
@@ -20,8 +16,8 @@ int	main(int ac, char **av)
   std::string		input;
   Command_handler	handler;
 
-  // try
-  //   {
+  try
+    {
       if (parse_config_file(ac, av, &parser))
 	return (1);
       handler.init(parser.getSystem());
@@ -37,12 +33,12 @@ int	main(int ac, char **av)
 	  if (input != "exit" && !(std::cin.eof()))
 	    handler.handle_input(input);
 	}
-  //   }
-  // catch (const std::exception& e)
-  //   {
-  //     parser.freeSystem();
-  //     throw e;
-  //   }
+    }
+  catch (const std::exception& e)
+    {
+      parser.freeSystem();
+      throw e;
+    }
   parser.freeSystem();
   return (0);
 }
