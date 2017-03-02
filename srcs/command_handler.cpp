@@ -5,7 +5,7 @@
 // Login   <veyssi_b@epitech.net>
 //
 // Started on  Wed Mar  1 14:21:46 2017 Baptiste Veyssiere
-// Last update Thu Mar  2 14:08:19 2017 Baptiste Veyssiere
+// Last update Thu Mar  2 18:16:01 2017 Baptiste Veyssiere
 //
 
 #include "command_handler.hpp"
@@ -60,6 +60,14 @@ void	Command_handler::simulate()
             (*this->component)[i]->value = 0;
           }
       }
+  for (size_t i = 0; i < size; i++)
+    if ((*this->component)[i]->type != "clock" &&
+	(*this->component)[i]->type != "input" &&
+	(*this->component)[i]->type != "output" &&
+	(*this->component)[i]->type != "true" &&
+	(*this->component)[i]->type != "false")
+      ((AComponent*)((*this->component)[i]->component))->Simulate_End();
+
 }
 
 void	Command_handler::loop()
