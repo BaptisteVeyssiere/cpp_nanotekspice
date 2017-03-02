@@ -5,7 +5,7 @@
 // Login   <scutar_n@epitech.net>
 //
 // Started on  Thu Feb  9 11:25:28 2017 Nathan Scutari
-// Last update Mon Feb 27 11:34:43 2017 Nathan Scutari
+// Last update Thu Mar  2 14:48:58 2017 Nathan Scutari
 //
 
 #include <iostream>
@@ -77,6 +77,6 @@ void		c_4001::SetLink(size_t pin_num_this,
 				size_t pin_num_target)
 
 {
-  link[pin_num_this].link = &component;
-  link[pin_num_this].pin_target = pin_num_target;
+  link[pin_num_this - 1].link = &component;
+  link[pin_num_this - 1].pin_target = pin_num_target;
 }

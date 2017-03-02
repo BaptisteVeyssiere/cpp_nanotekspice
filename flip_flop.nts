@@ -1,16 +1,16 @@
 # FLIP_FLOP TEST
 
 .chipsets:
-input		data
 input		reset
 input		set
+input		data
 clock		clock
 output		q1
 output		q2
 4013		flip_flop
 
 .links:
-data:1		flip_flop:5
+flip_flop:2	flip_flop:5
 reset:1		flip_flop:4
 set:1		flip_flop:6
 clock:1		flip_flop:3

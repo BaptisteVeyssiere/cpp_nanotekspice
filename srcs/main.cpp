@@ -5,7 +5,11 @@
 // Login   <veyssi_b@epitech.net>
 //
 // Started on  Mon Feb  6 15:43:02 2017 Baptiste Veyssiere
+<<<<<<< HEAD
 // Last update Thu Mar  2 15:23:29 2017 Baptiste Veyssiere
+=======
+// Last update Thu Mar  2 14:56:13 2017 Nathan Scutari
+>>>>>>> 7023bac8e455e625e92a89cabbe35dd40694cce0
 //
 
 #include "command_handler.hpp"
