@@ -5,7 +5,7 @@
 // Login   <scutar_n@epitech.net>
 //
 // Started on  Thu Mar  2 14:57:08 2017 Nathan Scutari
-// Last update Thu Mar  2 15:10:11 2017 Nathan Scutari
+// Last update Thu Mar  2 15:38:05 2017 Nathan Scutari
 //
 
 #ifndef ACOMPONENT_HPP_
@@ -14,14 +14,14 @@
 #include <vector>
 #include "IComponent.hpp"
 
-class	AComponent : public IComponent
+class	AComponent : public nts::IComponent
 {
-private:
+protected:
   std::vector<int>	computed;
 
 public:
   virtual ~AComponent();
-  void	Simulation_end();
+  void	Simulation_End();
 };
 
 #endif /* !ACOMPONENT_HPP_ */

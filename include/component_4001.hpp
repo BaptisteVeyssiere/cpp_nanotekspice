@@ -5,7 +5,7 @@
 // Login   <scutar_n@epitech.net>
 //
 // Started on  Thu Feb  9 11:01:40 2017 Nathan Scutari
-// Last update Mon Feb 13 15:00:52 2017 Nathan Scutari
+// Last update Thu Mar  2 15:38:51 2017 Nathan Scutari
 //
 
 #ifndef COMPONENT_4001_HPP_
@@ -14,12 +14,11 @@
 #include <vector>
 #include <string>
 #include "link.hpp"
-#include "IComponent.hpp"
+#include "AComponent.hpp"
 
-class	c_4001 : public nts::IComponent
+class	c_4001 : public AComponent
 {
 private:
-  std::vector<bool>				computed;
   std::vector<nts::Tristate>			pin_state;
   std::vector<t_link>				link;
 

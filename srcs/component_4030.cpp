@@ -5,7 +5,7 @@
 // Login   <scutar_n@epitech.net>
 //
 // Started on  Thu Feb  9 11:25:28 2017 Nathan Scutari
-// Last update Thu Mar  2 14:49:16 2017 Nathan Scutari
+// Last update Thu Mar  2 19:12:39 2017 Nathan Scutari
 //
 
 #include <iostream>
@@ -55,7 +55,6 @@ nts::Tristate	c_4030::Compute(size_t pin_num_this)
     ret = link[pin_num_this - 1].link->Compute(link[pin_num_this - 1].pin_target);
   else
     ret = pin_state[pin_num_this - 1];
-  computed[pin_num_this - 1] = false;
   pin_state[pin_num_this - 1] = ret;
   return (ret);
 }
