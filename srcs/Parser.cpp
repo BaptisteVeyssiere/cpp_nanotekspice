@@ -5,7 +5,7 @@
 // Login   <veyssi_b@epitech.net>
 //
 // Started on  Mon Feb  6 15:37:22 2017 Baptiste Veyssiere
-// Last update Thu Mar  2 20:00:58 2017 Baptiste Veyssiere
+// Last update Fri Mar  3 10:02:45 2017 Baptiste Veyssiere
 //
 
 #include "Parser.hpp"
@@ -212,6 +212,8 @@ void	Parser::createComponents(nts::t_ast_node& root)
     {
       this->component->push_back(new t_component);
       (*this->component)[i]->component = this->createComponent((*component->children)[i]->lexeme, "");
+      if ((*this->component)[i]->component == NULL)
+	throw parsing_error((*component->children)[i]->lexeme + " is not a valid type");
       (*this->component)[i]->name = (*component->children)[i]->value;
       (*this->component)[i]->type = (*component->children)[i]->lexeme;
       for (int j = 0; j < 22; j++)

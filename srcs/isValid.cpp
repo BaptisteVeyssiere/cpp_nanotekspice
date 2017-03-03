@@ -5,7 +5,7 @@
 // Login   <veyssi_b@epitech.net>
 //
 // Started on  Mon Feb 13 19:46:53 2017 Baptiste Veyssiere
-// Last update Thu Mar  2 15:25:47 2017 Baptiste Veyssiere
+// Last update Fri Mar  3 09:55:18 2017 Baptiste Veyssiere
 //
 
 #include "Parser.hpp"
@@ -57,17 +57,19 @@ static int	pinType(t_component *obj, int pin)
       "2716",
     };
 
+  std::cout << obj->type << " " << obj->name << std::endl;
   for (size_t i = 0; i < 19; i++)
     if (obj->type == str_list[i])
       return (func_list[i](pin));
-  throw std::exception();
+  throw parsing_error("Type " + obj->type + " doesn't exist");
   return (0);
 }
 
 bool	link_isValid(t_component *obj, t_component *obj2, int pin1, int pin2)
 {
-  int	type1;
-  int	type2;
+  int			type1;
+  int			type2;
+  std::ostringstream	os;
 
   type1 = pinType(obj, pin1);
   type2 = pinType(obj2, pin2);
@@ -77,7 +79,10 @@ bool	link_isValid(t_component *obj, t_component *obj2, int pin1, int pin2)
       (type1 == 3 && type2 == 1))
     {
       if (obj->isLinked[pin1] == true)
-	throw std::exception();
+	{
+	  os << "Pin " << pin1 << " of '" << obj->name << "' component is already linked";
+	  throw parsing_error(os.str());
+	}
       return (true);
     }
   else if ((type1 == 4 && type2 == 3) ||
@@ -86,9 +91,13 @@ bool	link_isValid(t_component *obj, t_component *obj2, int pin1, int pin2)
 	   (type1 == 1 && type2 == 3))
     {
       if (obj2->isLinked[pin2] == true)
-	throw std::exception();
+	{
+	  os << "Pin " << pin2 << " of '" << obj2->name << "' component is already linked";
+	  throw parsing_error(os.str());
+	}
       return (false);
     }
-  throw std::exception();
+  os << "Pin " << pin1 << " of '" << obj->name << "' component and pin " << pin2 << " of '" << obj2->name << "' component can't be linked together";
+  throw parsing_error(os.str());
   return (false);
 }

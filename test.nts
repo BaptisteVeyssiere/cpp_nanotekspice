@@ -2,8 +2,12 @@
 # One or gate
 
 .chipsets:
-clock		a
+input		a
+input		b
 output		o
+output		o2
+spof		f
 
 .links:
-a:3		o:1
+a:1		o:1
+a:1		o2:1
