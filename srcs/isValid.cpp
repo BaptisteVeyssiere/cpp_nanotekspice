@@ -5,7 +5,7 @@
 // Login   <veyssi_b@epitech.net>
 //
 // Started on  Mon Feb 13 19:46:53 2017 Baptiste Veyssiere
-// Last update Fri Mar  3 09:55:18 2017 Baptiste Veyssiere
+// Last update Fri Mar  3 10:14:08 2017 Baptiste Veyssiere
 //
 
 #include "Parser.hpp"
@@ -57,7 +57,6 @@ static int	pinType(t_component *obj, int pin)
       "2716",
     };
 
-  std::cout << obj->type << " " << obj->name << std::endl;
   for (size_t i = 0; i < 19; i++)
     if (obj->type == str_list[i])
       return (func_list[i](pin));

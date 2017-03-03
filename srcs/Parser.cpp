@@ -5,7 +5,7 @@
 // Login   <veyssi_b@epitech.net>
 //
 // Started on  Mon Feb  6 15:37:22 2017 Baptiste Veyssiere
-// Last update Fri Mar  3 10:02:45 2017 Baptiste Veyssiere
+// Last update Fri Mar  3 13:08:49 2017 Baptiste Veyssiere
 //
 
 #include "Parser.hpp"
@@ -80,14 +80,12 @@ nts::IComponent	*Parser::create4030(const std::string &value) const
 
 nts::IComponent	*Parser::create4040(const std::string &value) const
 {
-  //return (new c_4040(value));
-  return (NULL);
+  return (new c_4040(value));
 }
 
 nts::IComponent	*Parser::create4069(const std::string &value) const
 {
-  //return (new c_4069(value));
-  return (NULL);
+  return (new c_4069(value));
 }
 
 nts::IComponent	*Parser::create4071(const std::string &value) const
@@ -440,6 +438,8 @@ nts::t_ast_node	*Parser::createTree()
       this->goToData(&i);
       if (this->buffer[i] == '.')
 	root->children->push_back(this->createSection(&(++i), section));
+      else
+	throw parsing_error("Chipset section was not found");
       section = "links:";
     }
   this->goToData(&i);
