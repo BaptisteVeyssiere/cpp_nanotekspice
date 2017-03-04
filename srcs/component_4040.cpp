@@ -5,7 +5,7 @@
 // Login   <scutar_n@epitech.net>
 //
 // Started on  Thu Feb  9 11:25:28 2017 Nathan Scutari
-// Last update Sat Mar  4 11:59:04 2017 Nathan Scutari
+// Last update Sat Mar  4 16:45:57 2017 Nathan Scutari
 //
 
 #include <iostream>
@@ -31,11 +31,6 @@ c_4040::c_4040(UNUSED const std::string &value)
 
 c_4040::~c_4040()
 {}
-
-nts::Tristate	c_4040::Int_To_Tristate(int value)
-{
-  return ((value == 0) ? nts::FALSE : nts::TRUE);
-}
 
 nts::Tristate	c_4040::Add_Counter(size_t pin_num_this)
 {

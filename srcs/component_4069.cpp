@@ -5,7 +5,7 @@
 // Login   <scutar_n@epitech.net>
 //
 // Started on  Thu Feb  9 11:25:28 2017 Nathan Scutari
-// Last update Thu Mar  2 19:41:55 2017 Nathan Scutari
+// Last update Sat Mar  4 17:45:42 2017 Nathan Scutari
 //
 
 #include <iostream>
@@ -44,8 +44,10 @@ nts::Tristate	c_4069::Compute(size_t pin_num_this)
   if (computed[pin_num_this - 1] == true)
     return (pin_state[pin_num_this - 1]);
   computed[pin_num_this - 1] = true;
-  if (pin_num_this % 2 == 1)
+  if (pin_num_this % 2 == 0 && pin_num_this < 7)
     ret = Not_gate(this->Compute(pin_num_this - 1));
+  else if (pin_num_this % 2 == 0 && pin_num_this > 7)
+    ret = Not_gate(this->Compute(pin_num_this + 1));
   else if (this->link[pin_num_this - 1].link)
     ret = link[pin_num_this - 1].link->Compute(link[pin_num_this - 1].pin_target);
   else
