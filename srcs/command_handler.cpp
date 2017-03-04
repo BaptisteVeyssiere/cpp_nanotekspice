@@ -5,7 +5,7 @@
 // Login   <veyssi_b@epitech.net>
 //
 // Started on  Wed Mar  1 14:21:46 2017 Baptiste Veyssiere
-// Last update Thu Mar  2 20:07:35 2017 Baptiste Veyssiere
+// Last update Sat Mar  4 15:06:39 2017 Baptiste Veyssiere
 //
 
 #include "command_handler.hpp"
@@ -168,6 +168,8 @@ void    Command_handler::add_value(char const *str)
     state = nts::UNDEFINED;
   else
     state = std::stoi(value) < 1 ? nts::FALSE : nts::TRUE;
+  if (component->type != "input" && component->type != "clock")
+    throw parsing_error("Value of '" + component->type + "' component can't be changed");
   ((c_input*)(component->component))->SetPin(state);
   component->value = std::stoi(value);
 }
