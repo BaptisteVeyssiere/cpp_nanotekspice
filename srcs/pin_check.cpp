@@ -5,7 +5,7 @@
 // Login   <veyssi_b@epitech.net>
 //
 // Started on  Tue Feb 14 11:13:48 2017 Baptiste Veyssiere
-// Last update Fri Mar  3 09:40:19 2017 Baptiste Veyssiere
+// Last update Sat Mar  4 10:44:03 2017 Nathan Scutari
 //
 
 // 1: Input, 2: Pin Input, 3: Output, 4: Pin Output
@@ -141,9 +141,9 @@ char	c4040_pin(int pin)
   os << "Pin " << pin << " is not available for 4040 component";
   if (pin < 1 || pin > 15 || pin == 8)
     throw parsing_error(os.str());
-  if (pin == 1 || pin == 3 || pin == 14 || pin == 15)
-    return (4);
-  return (2);
+  if (pin == 11 || pin == 10)
+    return (2);
+  return (4);
 }
 
 char	c4069_pin(int pin)
