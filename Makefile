@@ -9,7 +9,7 @@
 
 NAME	= nanotekspice
 
-LIBNAME	= nanotekspice.a
+LIBNAME	= libnanotekspice.a
 
 RM	= rm -f
 
