@@ -5,13 +5,14 @@
 // Login   <scutar_n@epitech.net>
 //
 // Started on  Mon Feb 13 12:19:57 2017 Nathan Scutari
-// Last update Fri Mar  3 14:03:08 2017 Nathan Scutari
+// Last update Sun Mar  5 09:27:44 2017 Nathan Scutari
 //
 
 #ifndef ALL_COMPONENTS
 # define ALL_COMPONENTS
 
 # include "component_4040.hpp"
+# include "component_4094.hpp"
 # include "component_4081.hpp"
 # include "component_4069.hpp"
 # include "component_4001.hpp"

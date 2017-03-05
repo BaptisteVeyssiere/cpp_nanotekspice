@@ -1,8 +1,0 @@
-.chipsets:
-output		o
-input		i
-4069		not
-
-.links:
-o:1		not:12
-i:1		not:13

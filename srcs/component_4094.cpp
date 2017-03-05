@@ -5,7 +5,7 @@
 // Login   <scutar_n@epitech.net>
 //
 // Started on  Thu Feb  9 11:25:28 2017 Nathan Scutari
-// Last update Sat Mar  4 17:38:05 2017 Nathan Scutari
+// Last update Sun Mar  5 11:10:07 2017 Nathan Scutari
 //
 
 #include <iostream>
@@ -25,9 +25,9 @@ c_4094::c_4094(UNUSED const std::string &value)
       {'H', '1', '1', '1', 'N', 'N', 'N', 'Q'}
     };
 
-  counter = 0;
   link.pin_target = 0;
   link.link = NULL;
+  clock = nts::UNDEFINED;
   for (int i = 0 ; i < 6 ; ++i)
     {
       for (int y = 0 ; y < 8 ; ++y)
@@ -55,9 +55,49 @@ char		c_4094::Clock_Cycle(nts::Tristate clock)
   return ('U');
 }
 
+int		c_4094::Ttable_Check(char t_value, nts::Tristate state)
+{
+  char	c;
+
+  if (state == nts::TRUE)
+    c = '1';
+  else if (state == nts::FALSE)
+    c = '0';
+  else
+    c = 'U';
+  if (t_value == 'X')
+    return (0);
+  if (t_value == c)
+    return (0);
+  return (1);
+}
+
+void		c_4094::Set_Shift(int i)
+{
+  int	x;
+
+  x = 8;
+  if (ttable[i][6] == 'Q')
+    pin_state[8] = pin_state[pin_Q[6] - 1];
+  else
+    pin_state[9] = pin_state[pin_Q[6] - 1];
+  if (ttable[i][4] == 'U')
+    for (int i = 0 ; i < 8 ; ++i)
+      pin_state[pin_Q[i] - 1] = nts::UNDEFINED;
+  else if (ttable[i][4] != 'N')
+    {
+      while (--x > 0)
+	pin_state[pin_Q[x] - 1] = pin_state[pin_Q[x - 1] - 1];
+      pin_state[pin_Q[0] - 1] = nts::TRUE;
+      if (ttable[i][4] == '0')
+	pin_state[pin_Q[0] - 1] = nts::FALSE;
+    }
+}
+
 nts::Tristate	c_4094::Shift_Compute(size_t pin_num_this)
 {
   int	i;
+  int	match;
   i = -1;
 
   while (++i < 11)
@@ -65,11 +105,18 @@ nts::Tristate	c_4094::Shift_Compute(size_t pin_num_this)
   i = -1;
   while (++i < 6)
     {
-      for (int y = 0 ; y < 8 ; ++y)
-	{
-	  if (ttable[i][y] == Clock_Cycle(Compute(11)))
-	}
+      match = 1;
+      if (ttable[i][0] != Clock_Cycle(Compute(3)) ||
+	  Ttable_Check(ttable[i][1], Compute(15)) ||
+	  Ttable_Check(ttable[i][2], Compute(1)) ||
+	  Ttable_Check(ttable[i][3], Compute(2)))
+	match = 0;
+      if (match)
+	break;
     }
+  clock = Compute(3);
+  if (i < 6)
+    Set_Shift(i);
   return (pin_state[pin_num_this - 1]);
 }
 
@@ -82,6 +129,11 @@ nts::Tristate	c_4094::Compute(size_t pin_num_this)
   computed[pin_num_this - 1] = true;
   if (pin_num_this >= 4 && pin_num_this <= 14)
     ret = Shift_Compute(pin_num_this);
+  else if (this->link[pin_num_this - 1].link)
+    ret = link[pin_num_this - 1].link->Compute(link[pin_num_this - 1].pin_target);
+  else
+    ret = pin_state[pin_num_this - 1];
+  pin_state[pin_num_this - 1] = ret;
   return (ret);
 }
 

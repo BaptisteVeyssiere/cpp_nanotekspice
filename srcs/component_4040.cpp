@@ -5,7 +5,7 @@
 // Login   <scutar_n@epitech.net>
 //
 // Started on  Thu Feb  9 11:25:28 2017 Nathan Scutari
-// Last update Sat Mar  4 16:45:57 2017 Nathan Scutari
+// Last update Sun Mar  5 11:11:56 2017 Nathan Scutari
 //
 
 #include <iostream>
@@ -16,9 +16,9 @@ c_4040::c_4040(UNUSED const std::string &value)
   t_link	link;
   int		pin_Q[12] = {9, 7, 6, 5, 3, 2, 4, 13, 12, 14, 15, 1};
 
-  counter = 0;
   link.pin_target = 0;
   link.link = NULL;
+  clock = nts::UNDEFINED;
   for (int i = 0 ; i < 15 ; ++i)
     {
       if (i < 12)
@@ -66,6 +66,15 @@ nts::Tristate	c_4040::Reset_Counter(void)
   return (nts::FALSE);
 }
 
+char		c_4040::Clock_Cycle(nts::Tristate clock)
+{
+  if (this->clock == nts::FALSE && clock == nts::TRUE)
+    return ('L');
+  else if (this->clock == nts::TRUE && clock == nts::FALSE)
+    return ('H');
+  return ('U');
+}
+
 nts::Tristate	c_4040::Compute(size_t pin_num_this)
 {
   nts::Tristate	ret;
@@ -75,7 +84,7 @@ nts::Tristate	c_4040::Compute(size_t pin_num_this)
   computed[pin_num_this - 1] = true;
   if (pin_num_this != 11 && pin_num_this != 10)
     {
-      if (this->Compute(11) == nts::FALSE && this->Compute(10) == nts::TRUE)
+      if (this->Compute(11) == nts::FALSE && Clock_Cycle(Compute(10)) == 'H')
 	ret = Add_Counter(pin_num_this);
       else if (this->Compute(11) == nts::TRUE)
 	ret = Reset_Counter();
@@ -87,6 +96,7 @@ nts::Tristate	c_4040::Compute(size_t pin_num_this)
 	}
       else
 	ret = pin_state[pin_num_this - 1];
+      clock = Compute(10);
     }
   else if (this->link[pin_num_this - 1].link)
     ret = link[pin_num_this - 1].link->Compute(link[pin_num_this - 1].pin_target);

@@ -5,7 +5,7 @@
 // Login   <scutar_n@epitech.net>
 //
 // Started on  Thu Feb  9 11:01:40 2017 Nathan Scutari
-// Last update Sat Mar  4 16:45:44 2017 Nathan Scutari
+// Last update Sun Mar  5 11:10:34 2017 Nathan Scutari
 //
 
 #ifndef COMPONENT_4040_HPP_
@@ -19,7 +19,7 @@
 class	c_4040 : public AComponent
 {
 private:
-  int						counter;
+  nts::Tristate					clock;
   int						pin_Q[12];
   std::vector<nts::Tristate>			pin_state;
   std::vector<struct s_link>			link;
@@ -31,6 +31,7 @@ public:
   nts::Tristate	Add_Counter(size_t pin_num_this);
   nts::Tristate	Reset_Counter(void);
   nts::Tristate Compute(size_t pin_num_this = 1);
+  char		Clock_Cycle(nts::Tristate clock);
   void		SetLink(size_t pin_num_this,
 				nts::IComponent &component,
 				size_t pin_num_target);

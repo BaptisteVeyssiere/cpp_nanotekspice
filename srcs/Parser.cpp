@@ -5,7 +5,7 @@
 // Login   <veyssi_b@epitech.net>
 //
 // Started on  Mon Feb  6 15:37:22 2017 Baptiste Veyssiere
-// Last update Sat Mar  4 11:15:33 2017 Nathan Scutari
+// Last update Sun Mar  5 09:32:51 2017 Nathan Scutari
 //
 
 #include "Parser.hpp"
@@ -100,8 +100,7 @@ nts::IComponent	*Parser::create4081(const std::string &value) const
 
 nts::IComponent	*Parser::create4094(const std::string &value) const
 {
-  //return (new c_4094(value));
-  return (NULL);
+  return (new c_4094(value));
 }
 
 nts::IComponent	*Parser::create4514(const std::string &value) const
