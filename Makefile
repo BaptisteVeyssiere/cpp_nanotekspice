@@ -71,8 +71,6 @@ CFLAGS	= -Iinclude
 $(NAME): $(OBJ)
 	@$(CC) -o $(NAME) $(OBJ)
 	@echo "Linking complete!"
-
-$(LIBNAME): $(OBJ)
 	@ar rcs $(LIBNAME) $(LIBOBJ)
 	@ranlib $(LIBNAME)
 	@echo "Static library created"
